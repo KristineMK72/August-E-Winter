@@ -20,6 +20,7 @@
       overflow-y: scroll;
       padding: 1em;
       background: rgba(30, 30, 30, 0.85);
+      box-sizing: border-box;
     }
     #map {
       width: 65%;
@@ -43,10 +44,20 @@
       padding: 1em;
       border-radius: 8px;
       background: rgba(50, 50, 50, 0.8);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
     h2 {
       margin-top: 0;
       color: #ffd700;
+    }
+    .horse-tooltip {
+      background: #444;
+      color: #ffd700;
+      font-weight: bold;
+      font-size: 1.1em;
+      border-radius: 8px;
+      padding: 0.6em 1em;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
   </style>
 </head>
@@ -59,39 +70,23 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
+    // --- Map Setup ---
     const map = L.map('map').setView([44.95, -93.09], 7);
-
-    // Dark vintage tile layer
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '© CartoDB'
     }).addTo(map);
 
-    // Web-hosted icons
+    // --- Custom Icons ---
     const icons = {
       stagecoach: L.icon({ iconUrl: 'https://img.icons8.com/emoji/48/stagecoach.png', iconSize: [32, 32] }),
-      pony: L.icon({ iconUrl: 'https://img.icons8.com/color/48/horse.png', iconSize: [32, 32] }),
-      church: L.icon({ iconUrl: 'https://img.icons8.com/ios-filled/50/church.png', iconSize: [32, 32] }),
-      native: L.icon({ iconUrl: 'https://img.icons8.com/ios/50/native-american.png', iconSize: [32, 32] }),
-      winter: L.icon({ iconUrl: 'https://img.icons8.com/ios-filled/50/user-location.png', iconSize: [32, 32] })
+      pony:      L.icon({ iconUrl: 'https://img.icons8.com/color/48/horse.png', iconSize: [32, 32] }),
+      church:    L.icon({ iconUrl: 'https://img.icons8.com/ios-filled/50/church.png', iconSize: [32, 32] }),
+      native:    L.icon({ iconUrl: 'https://img.icons8.com/ios/50/native-american.png', iconSize: [32, 32] }),
+      winter:    L.icon({ iconUrl: 'https://img.icons8.com/ios-filled/50/user-location.png', iconSize: [32, 32] })
     };
 
-    // Starting point: Rushville, Ohio
+    // --- Journey Chapters ---
     const startCoords = [39.76444, -82.43028]; // Rushville, OH
-    L.circleMarker(startCoords, {
-      radius: 7,
-      color: 'lime',
-      fillColor: 'lime',
-      fillOpacity: 1
-    }).addTo(map).bindPopup("<strong>Start: Rushville, Ohio</strong><br>February 1861 – Winter departs for Minnesota.");
-
-    L.marker(startCoords, {
-      icon: L.icon({
-        iconUrl: 'https://img.icons8.com/emoji/48/green-circle-emoji.png',
-        iconSize: [24, 24]
-      })
-    }).addTo(map);
-
-    // Chapters
     const chapters = [
       { title: "Prologue – Rushville, Ohio", text: "February 1861 – August Edward Winter departs from his home in Rushville, Ohio to begin his missionary journey.", coords: startCoords, icon: icons.winter },
       { title: "La Crosse, Wisconsin", text: "Traveled via Chicago and Milwaukee to La Crosse.", coords: [43.81, -91.25], icon: icons.winter },
@@ -106,9 +101,8 @@
       { title: "Fall 1865 – Departure", text: "Accepted call in Wisconsin and left Minnesota.", coords: [43.78, -88.44], icon: icons.winter }
     ];
 
+    // --- Draw Journey Polyline ---
     const pathCoords = chapters.map(chap => chap.coords);
-
-    // Draw golden path
     L.polyline(pathCoords, {
       color: 'gold',
       weight: 4,
@@ -116,36 +110,46 @@
       dashArray: '10,5'
     }).addTo(map);
 
-    // Add chapter markers and story panel
+    // --- Start Marker ---
+    L.circleMarker(startCoords, {
+      radius: 7,
+      color: 'lime',
+      fillColor: 'lime',
+      fillOpacity: 1
+    }).addTo(map).bindPopup("<strong>Start: Rushville, Ohio</strong><br>February 1861 – Winter departs for Minnesota.");
+
+    // --- Chapters: Markers & Story Panel ---
     const storyDiv = document.getElementById('story');
     chapters.forEach((chap, i) => {
-      setTimeout(() => {
-        L.marker(chap.coords, { icon: chap.icon }).addTo(map)
-          .bindPopup(`<strong>${chap.title}</strong><br>${chap.text}`).openPopup();
+      // Map marker for each chapter
+      const marker = L.marker(chap.coords, { icon: chap.icon }).addTo(map)
+        .bindPopup(`<strong>${chap.title}</strong><br>${chap.text}`);
+      // Click marker to open popup (not automatically)
+      marker.on('click', function() { marker.openPopup(); });
+      // Small golden circle for emphasis
+      L.circleMarker(chap.coords, {
+        radius: 5,
+        color: '#ffd700',
+        fillColor: '#ffd700',
+        fillOpacity: 0.9
+      }).addTo(map);
 
-        L.circleMarker(chap.coords, {
-          radius: 5,
-          color: '#ffd700',
-          fillColor: '#ffd700',
-          fillOpacity: 0.9
-        }).addTo(map);
-
-        const div = document.createElement('div');
-        div.className = 'chapter';
-        div.innerHTML = `<h2>${chap.title}</h2><p>${chap.text}</p>`;
-        storyDiv.appendChild(div);
-      }, i * 3000);
+      // Story panel update
+      const div = document.createElement('div');
+      div.className = 'chapter';
+      div.innerHTML = `<h2>${chap.title}</h2><p>${chap.text}</p>`;
+      storyDiv.appendChild(div);
     });
 
-    // 🐎 Smooth horse animation with pan + click-to-continue
+    // --- Animated Horse Journey ---
     const horseIcon = L.icon({
       iconUrl: 'https://img.icons8.com/color/48/horse.png',
       iconSize: [32, 32]
     });
-
     const horseMarker = L.marker(pathCoords[0], { icon: horseIcon }).addTo(map)
       .bindTooltip("Click to begin journey", { permanent: true, direction: "top", className: "horse-tooltip" });
 
+    // Calculate intermediate coordinates for smooth animation
     function interpolateCoords(start, end, steps) {
       const latStep = (end[0] - start[0]) / steps;
       const lngStep = (end[1] - start[1]) / steps;
@@ -156,8 +160,36 @@
       return coords;
     }
 
+    // Animate horse along the path
     function animateHorse(path, stepsPerSegment = 100, delay = 80) {
       let allCoords = [];
       for (let i = 0; i < path.length - 1; i++) {
-        const segment = interpolateCoords(path[i], path[i + 1], stepsPerSegment);
-        allCoords = allCoords.concat(segment
+        let segment = interpolateCoords(path[i], path[i + 1], stepsPerSegment);
+        // Remove last coord of each segment except final to avoid duplicates
+        if (i < path.length - 2) segment.pop();
+        allCoords = allCoords.concat(segment);
+      }
+      let idx = 0;
+      function move() {
+        if (idx < allCoords.length) {
+          horseMarker.setLatLng(allCoords[idx]);
+          map.panTo(allCoords[idx], {animate: true, duration: 0.5});
+          idx++;
+          setTimeout(move, delay);
+        }
+      }
+      move();
+    }
+
+    // Start animation on click, only once
+    let journeyStarted = false;
+    horseMarker.on('click', function() {
+      if (!journeyStarted) {
+        journeyStarted = true;
+        horseMarker.unbindTooltip();
+        animateHorse(pathCoords);
+      }
+    });
+  </script>
+</body>
+</html>
