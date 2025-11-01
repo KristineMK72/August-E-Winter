@@ -101,35 +101,14 @@
       { title: "Fall 1865 – Departure", text: "Accepted call in Wisconsin and left Minnesota.", coords: [43.78, -88.44], icon: icons.winter }
     ];
 
-    // --- Draw Journey with Hoof Prints ---
-    // Bright yellow hoof print icon (swap in your own PNG if preferred!)
-    const hoofIcon = L.icon({
-      iconUrl: 'https://img.icons8.com/fluency/48/horse-hoof.png', // Use your own yellow hoof PNG for best results!
-      iconSize: [28, 28],
-      iconAnchor: [14, 14],
-    });
-
-    // Helper: interpolate points between chapters for hoof prints
-    function interpolateCoords(start, end, steps) {
-      const latStep = (end[0] - start[0]) / steps;
-      const lngStep = (end[1] - start[1]) / steps;
-      const coords = [];
-      for (let i = 0; i <= steps; i++) {
-        coords.push([start[0] + latStep * i, start[1] + lngStep * i]);
-      }
-      return coords;
-    }
-
-    // Place hoof prints along each segment
+    // --- Draw Journey Path as a Yellow Line ---
     const pathCoords = chapters.map(chap => chap.coords);
-    const stepsPerSegment = 20; // hoof prints per segment, adjust for density!
-    for (let i = 0; i < pathCoords.length - 1; i++) {
-      const segment = interpolateCoords(pathCoords[i], pathCoords[i+1], stepsPerSegment);
-      // Place hoof icons (skip endpoints to avoid overlap with chapter markers)
-      for (let j = 1; j < segment.length - 1; j++) {
-        L.marker(segment[j], { icon: hoofIcon, interactive: false }).addTo(map);
-      }
-    }
+
+    const yellowLine = L.polyline(pathCoords, {
+      color: 'yellow',
+      weight: 5,
+      opacity: 0.85
+    }).addTo(map);
 
     // --- Start Marker ---
     L.circleMarker(startCoords, {
@@ -170,8 +149,17 @@
     const horseMarker = L.marker(pathCoords[0], { icon: horseIcon }).addTo(map)
       .bindTooltip("Click to begin journey", { permanent: true, direction: "top", className: "horse-tooltip" });
 
-    // Calculate intermediate coordinates for smooth animation
-    // (same as before)
+    // Helper: interpolate points between chapters for smooth animation
+    function interpolateCoords(start, end, steps) {
+      const latStep = (end[0] - start[0]) / steps;
+      const lngStep = (end[1] - start[1]) / steps;
+      const coords = [];
+      for (let i = 0; i <= steps; i++) {
+        coords.push([start[0] + latStep * i, start[1] + lngStep * i]);
+      }
+      return coords;
+    }
+
     // Animate horse along the path
     function animateHorse(path, stepsPerSegment = 100, delay = 80) {
       let allCoords = [];
