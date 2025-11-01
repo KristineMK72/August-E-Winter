@@ -1,0 +1,178 @@
+Absolutely, Kris — here’s your fully rewritten and complete storymap code with all enhancements:
+
+✅ Rushville, Ohio as the starting point  
+✅ Left-aligned story panel with title and source attribution  
+✅ Web-hosted icons (no local assets needed)  
+✅ Golden polyline path  
+✅ Circle markers at each stop  
+✅ Smooth horse animation that pans to each location  
+✅ Click-to-continue interaction (horse waits for user click to begin)  
+
+---
+
+## 🧭 Final Storymap Code: Complete and Polished
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Winter's Missionary Journey – 1861–1865</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: url('https://www.transparenttextures.com/patterns/old-wall.png') repeat;
+      background-size: cover;
+      color: #f4f1e9;
+      display: flex;
+      height: 100vh;
+    }
+    #story {
+      width: 35%;
+      overflow-y: scroll;
+      padding: 1em;
+      background: rgba(30, 30, 30, 0.85);
+    }
+    #map {
+      width: 65%;
+      height: 100vh;
+      filter: sepia(0.3) contrast(1.2);
+    }
+    h1 {
+      font-size: 1.8em;
+      color: #ffd700;
+      margin-bottom: 0.5em;
+      text-align: center;
+    }
+    .source {
+      font-size: 0.9em;
+      color: #ccc;
+      text-align: center;
+      margin-bottom: 1.5em;
+    }
+    .chapter {
+      margin-bottom: 2em;
+      padding: 1em;
+      border-radius: 8px;
+      background: rgba(50, 50, 50, 0.8);
+    }
+    h2 {
+      margin-top: 0;
+      color: #ffd700;
+    }
+  </style>
+</head>
+<body>
+  <div id="story">
+    <h1>August Edward Winter’s Missionary Journey</h1>
+    <div class="source">Based on Winter’s own account in his autobiography, written in 1899</div>
+  </div>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([44.95, -93.09], 7);
+
+    // Dark vintage tile layer
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© CartoDB'
+    }).addTo(map);
+
+    // Web-hosted icons
+    const icons = {
+      stagecoach: L.icon({ iconUrl: 'https://img.icons8.com/emoji/48/stagecoach.png', iconSize: [32, 32] }),
+      pony: L.icon({ iconUrl: 'https://img.icons8.com/color/48/horse.png', iconSize: [32, 32] }),
+      church: L.icon({ iconUrl: 'https://img.icons8.com/ios-filled/50/church.png', iconSize: [32, 32] }),
+      native: L.icon({ iconUrl: 'https://img.icons8.com/ios/50/native-american.png', iconSize: [32, 32] }),
+      winter: L.icon({ iconUrl: 'https://img.icons8.com/ios-filled/50/user-location.png', iconSize: [32, 32] })
+    };
+
+    // Starting point: Rushville, Ohio
+    const startCoords = [39.76444, -82.43028]; // Rushville, OH
+    L.circleMarker(startCoords, {
+      radius: 7,
+      color: 'lime',
+      fillColor: 'lime',
+      fillOpacity: 1
+    }).addTo(map).bindPopup("<strong>Start: Rushville, Ohio</strong><br>February 1861 – Winter departs for Minnesota.");
+
+    L.marker(startCoords, {
+      icon: L.icon({
+        iconUrl: 'https://img.icons8.com/emoji/48/green-circle-emoji.png',
+        iconSize: [24, 24]
+      })
+    }).addTo(map);
+
+    // Chapters
+    const chapters = [
+      { title: "Prologue – Rushville, Ohio", text: "February 1861 – August Edward Winter departs from his home in Rushville, Ohio to begin his missionary journey.", coords: startCoords, icon: icons.winter },
+      { title: "La Crosse, Wisconsin", text: "Traveled via Chicago and Milwaukee to La Crosse.", coords: [43.81, -91.25], icon: icons.winter },
+      { title: "Minieska – Missed Stagecoach", text: "Stopped at a hotel, missed the coach, walked until a farmer gave him a sled ride.", coords: [44.08, -91.75], icon: icons.stagecoach },
+      { title: "Winona to Hastings", text: "Waited for the next coach and continued to Hastings.", coords: [44.74, -92.85], icon: icons.winter },
+      { title: "St. Paul Arrival", text: "Passengers paid to grease the runners. Horses exhausted.", coords: [44.95, -93.09], icon: icons.stagecoach },
+      { title: "Minneapolis", text: "Hired a team to reach Minneapolis. Found a frontier town of 3,000.", coords: [44.98, -93.27], icon: icons.winter },
+      { title: "Spring 1861 – Missionary Work Begins", text: "Preached in Shakopee, Carver, and near Henderson.", coords: [44.52, -93.89], icon: icons.pony },
+      { title: "Summer 1861 – Installed in Henderson", text: "Accepted call as resident minister. $100/year salary.", coords: [44.52, -93.89], icon: icons.church },
+      { title: "Continued Travels", text: "Preached in New Auburn, Fish Lake, Hay Creek, Faribault, Havana Twp, Courtland, Blue Earth.", coords: [44.30, -93.27], icon: icons.winter },
+      { title: "Aug 1862 – Dakota Conflict", text: "Fled to Belle Plaine. Lost pony to military use.", coords: [44.62, -93.77], icon: icons.native },
+      { title: "Fall 1865 – Departure", text: "Accepted call in Wisconsin and left Minnesota.", coords: [43.78, -88.44], icon: icons.winter }
+    ];
+
+    const pathCoords = chapters.map(chap => chap.coords);
+
+    // Draw golden path
+    L.polyline(pathCoords, {
+      color: 'gold',
+      weight: 4,
+      opacity: 0.8,
+      dashArray: '10,5'
+    }).addTo(map);
+
+    // Add chapter markers and story panel
+    const storyDiv = document.getElementById('story');
+    chapters.forEach((chap, i) => {
+      setTimeout(() => {
+        L.marker(chap.coords, { icon: chap.icon }).addTo(map)
+          .bindPopup(`<strong>${chap.title}</strong><br>${chap.text}`).openPopup();
+
+        L.circleMarker(chap.coords, {
+          radius: 5,
+          color: '#ffd700',
+          fillColor: '#ffd700',
+          fillOpacity: 0.9
+        }).addTo(map);
+
+        const div = document.createElement('div');
+        div.className = 'chapter';
+        div.innerHTML = `<h2>${chap.title}</h2><p>${chap.text}</p>`;
+        storyDiv.appendChild(div);
+      }, i * 3000);
+    });
+
+    // 🐎 Smooth horse animation with pan + click-to-continue
+    const horseIcon = L.icon({
+      iconUrl: 'https://img.icons8.com/color/48/horse.png',
+      iconSize: [32, 32]
+    });
+
+    const horseMarker = L.marker(pathCoords[0], { icon: horseIcon }).addTo(map)
+      .bindTooltip("Click to begin journey", { permanent: true, direction: "top", className: "horse-tooltip" });
+
+    function interpolateCoords(start, end, steps) {
+      const latStep = (end[0] - start[0]) / steps;
+      const lngStep = (end[1] - start[1]) / steps;
+      const coords = [];
+      for (let i = 0; i <= steps; i++) {
+        coords.push([start[0] + latStep * i, start[1] + lngStep * i]);
+      }
+      return coords;
+    }
+
+    function animateHorse(path, stepsPerSegment = 100, delay = 80) {
+      let allCoords = [];
+      for (let i = 0; i < path.length - 1; i++) {
+        const segment = interpolateCoords(path[i], path[i + 1], stepsPerSegment);
+        allCoords = allCoords.concat(segment
