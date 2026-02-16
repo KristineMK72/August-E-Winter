@@ -1,259 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>August Edward Winter: Missionary Journey (1861–1865)</title>
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <meta charset="UTF-8">
+  <title>The Travels of August Edward Winter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        /* --- General Styling (Dark Vintage Theme) --- */
-        body {
-            margin: 0;
-            font-family: 'Georgia', serif;
-            background: url('https://www.transparenttextures.com/patterns/old-wall.png') repeat;
-            background-size: cover;
-            color: #f4f1e9;
-            display: flex;
-            height: 100vh;
-        }
-        #story {
-            width: 35%;
-            overflow-y: scroll;
-            padding: 1em;
-            background: rgba(30, 30, 30, 0.9);
-            box-sizing: border-box;
-            z-index: 10;
-        }
-        #map {
-            width: 65%;
-            height: 100vh;
-            filter: sepia(0.3) contrast(1.2); 
-            z-index: 5;
-        }
-        h1 {
-            font-size: 1.8em;
-            color: #ffd700;
-            margin-bottom: 0.5em;
-            text-align: center;
-        }
-        .source {
-            font-size: 0.9em;
-            color: #ccc;
-            text-align: center;
-            margin-bottom: 1.5em;
-        }
-        /* --- Chapter Styles --- */
-        .chapter {
-            margin-bottom: 2em;
-            padding: 1.5em;
-            border-radius: 8px;
-            background: rgba(50, 50, 50, 0.9);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            min-height: 70vh; 
-            opacity: 0.85; 
-            transition: opacity 0.3s;
-        }
-        .chapter.active {
-            opacity: 1;
-            background: rgba(70, 70, 70, 0.95);
-        }
-        h2 {
-            margin-top: 0;
-            color: #ffd700;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-            padding-bottom: 0.5em;
-        }
-        p { line-height: 1.6; }
-        .details { font-style: italic; font-size: 0.9em; color: #aaa; margin-top: 0.5em; }
-        .audio-player { width: 100%; margin-top: 1em; }
-        
-        /* --- Leaflet Overrides for Text Icons --- */
-        .leaflet-control-layers-toggle {
-            background-color: rgba(50, 50, 50, 0.8) !important;
-            color: #ffd700;
-        }
-        .custom-icon div {
-            background-color: rgba(50, 50, 50, 0.9);
-            border-radius: 50%;
-            padding: 4px;
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-        }
-        .horse-tooltip .leaflet-tooltip {
-            background: #444; color: #ffd700; font-weight: bold; font-size: 1.1em;
-        }
-    </style>
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background: #fbf6ea;
+      color: #1f2937;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid #ddd;
+      background: #fbf6ea;
+      position: sticky;
+      top: 0;
+    }
+
+    h1 {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .hamburger {
+      width: 28px;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      height: 3px;
+      background: #1f2937;
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    nav {
+      display: none;
+      flex-direction: column;
+      padding: 16px 24px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+
+    nav a {
+      text-decoration: none;
+      padding: 8px 0;
+      color: #1f2937;
+    }
+
+    main {
+      max-width: 700px;
+      margin: auto;
+      padding: 40px 24px;
+    }
+  </style>
 </head>
+
 <body>
-    <div id="story">
-        <h1>August Edward Winter’s Missionary Journey</h1>
-        <div class="source">Based on Winter’s own account (1899). Family background by Wilhelm Winter.</div>
-        </div>
-    <div id="map"></div>
 
-    <script>
-    // Execute all JS only after the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        
-        // --- 1. DATA DEFINITIONS ---
+<header>
+  <h1>August Edward Winter</h1>
 
-        const chaptersData = [
-            { 
-                title: "Prologue: Wilhelm's Immigration", 
-                text: "Wilhelm Winter, a gunsmith, immigrated with his wife Henrietta and family from Germany, arriving in **Baltimore, MD** on June 8, 1843.", 
-                coords: [39.2904, -76.6122], // Baltimore, MD
-                mode: 'family', 
-                context: "Immigration Year: 1843. Wilhelm's Occupation: Gunsmith."
-            },
-            { 
-                title: "Homestead: Rushville, Ohio", 
-                text: "The family initially settled in **East Rushville, Ohio**, enduring their first winter in a log house. By 1850, they had moved to a small farm in Berne Township.", 
-                coords: [39.76444, -82.43028], 
-                mode: 'church', 
-                context: "Settlement: East Rushville, OH. Census: 1850 (Fairfield County)."
-            },
-            { 
-                title: "Departure from Ohio", 
-                text: "February 1861 – August Edward Winter departs from his home in Rushville, Ohio, now a Lutheran minister, beginning his missionary journey.", 
-                coords: [39.76444, -82.43028], 
-                mode: 'winter', 
-                context: "Journey Start: February 1861. Mode: Stagecoach."
-            },
-            { title: "La Crosse, Wisconsin", text: "Traveled via Chicago and Milwaukee to La Crosse, Wisconsin.", coords: [43.81, -91.25], mode: 'stagecoach', context: "Mode: Stagecoach." },
-            { title: "Minieska – Missed Coach", text: "Stopped at a hotel, missed the coach, walked until a farmer gave him a sled ride to Winona.", coords: [44.08, -91.75], mode: 'sled', context: "Mode: Foot / Sled. Year: 1861." },
-            { title: "Winona to Hastings", text: "Waited for the next stagecoach and continued on the frozen Mississippi to Hastings.", coords: [44.74, -92.85], mode: 'stagecoach', context: "Route: Frozen Mississippi River." },
-            { title: "St. Paul Arrival", text: "Passengers paid to grease the runners for speed, exhausting the horses. Arrived in St. Paul.", coords: [44.95, -93.09], mode: 'stagecoach', context: "Challenges: Cold Weather, Horse Exhaustion." },
-            { title: "Minneapolis & Mission Start", text: "Hired a team to reach Minneapolis, a frontier town of 3,000. Began missionary work on foot.", coords: [44.98, -93.27], mode: 'winter', context: "Arrival Date: Feb 12, 1861. Final Mode: Hired Team." },
-            { title: "Installed in Henderson", text: "Summer 1861: Accepted call as resident minister near Henderson ($100/year salary, half in provisions). Preached in Shakopee, Carver, and Sibley County.", coords: [44.52, -93.89], mode: 'church', context: "Salary: $100/year. Year: July 11, 1861." },
-            { title: "Dakota Conflict & Flight", text: "August 1862: Fled to Belle Plaine. Lost pony to military use. The family maintained strong ties to their Lutheran faith.", coords: [44.62, -93.77], mode: 'native', context: "Historical Event: Dakota Conflict (1862). Loss: Pony and Wagon." },
-            { title: "Legacy & Departure", text: "Fall 1865: Winter left for a Lutheran congregation in Wisconsin. His writings reflect on pioneer resilience and the challenges like the **1864 grasshopper invasions**.", coords: [43.78, -88.44], mode: 'family', context: "Departure: Fall 1865. Legacy: Personal Accounts." }
-        ];
-        
-        const pathCoords = chaptersData.map(chap => chap.coords);
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</header>
 
-        // --- 2. ICON DEFINITIONS (Stable Text-Based Icons) ---
+<nav id="menu">
+  <a href="#">Home</a>
+  <a href="#">Timeline</a>
+  <a href="#">Sources</a>
+</nav>
 
-        const createThemedIcon = (symbol, color = '#ffd700') => L.divIcon({
-            className: 'custom-icon',
-            html: `<div style="
-                background-color: rgba(50, 50, 50, 0.9);
-                color: ${color};
-                font-size: 20px;
-                padding: 4px;
-                border: 2px solid ${color};
-                border-radius: 50%;
-                width: 30px;
-                height: 30px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-family: Arial, sans-serif;
-            ">${symbol}</div>`,
-            iconSize: [40, 40],
-            iconAnchor: [20, 40]
-        });
+<main>
+  <h2>The Travels of August Edward Winter, Lutheran Missionary</h2>
+  <p>
+    A narrative reconstruction of Winter’s missionary journey from 1861–1865,
+    based on his 1899 published account and family records.
+  </p>
+</main>
 
-        const icons = {
-            family: createThemedIcon('👪', '#FFD700'),     // Family/Legacy
-            winter: createThemedIcon('🚶', '#FFFFFF'),     // Traveler
-            stagecoach: createThemedIcon('🤠', '#CD853F'), // Stagecoach (Brown)
-            pony: createThemedIcon('🐎', '#DAA520'),      // Pony/Horse
-            sled: createThemedIcon('🛷', '#ADD8E6'),       // Sled
-            church: createThemedIcon('⛪', '#FFD700'),     // Church/Ministry
-            native: createThemedIcon('⚔️', '#800000'),      // Conflict
-        };
-
-        // --- 3. MAP INITIALIZATION & CORE SETUP ---
-
-        const map = L.map('map').setView([44.95, -93.09], 4);
-        let dakotaConflictLayer = L.geoJSON(null);
-        let horseMarker = null;
-
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '© CartoDB'
-        }).addTo(map);
-        
-        // Load Dakota Conflict Boundary
-        fetch('https://raw.githubusercontent.com/glynnbird/uselessmaps/master/us-dakota-war-1862.geojson')
-            .then(response => response.json())
-            .then(data => {
-                dakotaConflictLayer.addData(data).setStyle({
-                    color: '#ff4500', fillColor: '#ff4500', fillOpacity: 0.2, weight: 2, opacity: 0.7
-                }).addTo(map);
-                L.control.layers(null, { 'Dakota Conflict Zone (1862)': dakotaConflictLayer }, { collapsed: false }).addTo(map);
-            });
-        
-        // Draw Journey Path
-        L.polyline(pathCoords, { color: 'gold', weight: 4, opacity: 0.8 }).addTo(map);
-
-        // --- 4. STORY PANEL AND MARKER POPULATION ---
-
-        const storyDiv = document.getElementById('story');
-        chaptersData.forEach((chap, i) => {
-            // Create map marker
-            L.marker(chap.coords, { icon: icons[chap.mode] || icons.winter })
-                .addTo(map)
-                .bindPopup(`<strong>${chap.title}</strong><br>${chap.text}`);
-
-            // Create story panel HTML
-            const div = document.createElement('div');
-            div.className = 'chapter';
-            div.setAttribute('data-index', i);
-            div.innerHTML = `
-                <h2>${chap.title}</h2>
-                <p>${chap.text}</p>
-                <div class="details"><strong>Details:</strong> ${chap.context}</div>
-                <audio controls class="audio-player" preload="none">
-                    <source src="audio/chapter${i + 1}.mp3" type="audio/mpeg">
-                </audio>`;
-            storyDiv.appendChild(div);
-        });
-
-        // --- 5. SCROLL INTERACTION & ANIMATION SETUP ---
-
-        const chaptersDivs = document.querySelectorAll('.chapter');
-
-        // Setup the initial position of the 'horse' marker (the traveler icon)
-        horseMarker = L.marker(pathCoords[0], { icon: icons.winter, zIndexOffset: 1000 }).addTo(map)
-            .bindTooltip("Start Here: Scroll down to begin the journey", { permanent: true, direction: "top", className: "horse-tooltip" }).openTooltip();
-
-
-        // SCROLL OBSERVER: Pan map, play audio, and update horse position on scroll
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                const chapterIndex = parseInt(entry.target.getAttribute('data-index'));
-                const audio = entry.target.querySelector('audio');
-                
-                if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-                    // Activate chapter (style and audio)
-                    chaptersDivs.forEach(ch => ch.classList.remove('active'));
-                    entry.target.classList.add('active');
-                    
-                    if (audio && audio.paused) audio.play().catch(e => console.log('Audio play failed:', e));
-                    
-                    // Pan map to new location
-                    map.flyTo(chaptersData[chapterIndex].coords, 9, { duration: 1.5 });
-
-                    // Update horse marker position
-                    if (horseMarker) {
-                        horseMarker.setLatLng(chaptersData[chapterIndex].coords);
-                        horseMarker.setIcon(icons[chaptersData[chapterIndex].mode] || icons.winter);
-                        horseMarker.setTooltipContent(`Current Stop: ${chaptersData[chapterIndex].title}`);
-                    }
-                } else if (entry.intersectionRatio <= 0.5) {
-                    // Pause audio when scrolling away
-                    if (audio) audio.pause();
-                }
-            });
-        }, { threshold: 0.5 }); 
-
-        chaptersDivs.forEach(chapter => observer.observe(chapter));
-        
-    }); // End of DOMContentLoaded
+<script>
+  function toggleMenu() {
+    var menu = document.getElementById("menu");
+    if (menu.style.display === "flex") {
+      menu.style.display = "none";
+    } else {
+      menu.style.display = "flex";
+    }
+  }
 </script>
+
 </body>
 </html>
