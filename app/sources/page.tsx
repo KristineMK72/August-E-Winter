@@ -13,7 +13,7 @@ export default function SourcesPage() {
       <div className="mt-4 rounded-2xl border border-black/10 bg-white/40 p-6">
         <h2 className="text-lg font-medium">Background</h2>
         <ul className="mt-3 list-disc pl-5 opacity-80 space-y-2">
-          <li>Family background compiled by Wilhelm Winter.</li>
+          <li>Family background compiled by daughter of August E. Winter.</li>
         </ul>
       </div>
     </main>
