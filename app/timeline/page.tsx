@@ -61,8 +61,6 @@ const timeline = [
     quote:
       "There was a scarcity of Pastors… Father was to preach at one of their places regularly.",
     locations: ["Minnesota frontier settlements"],
-    facts: ["Ordained: July 4, 1861"],
-    sources: ["A.E. Winter autobiography (ordination date)"],
   },
 
   {
@@ -74,11 +72,6 @@ const timeline = [
       "Even today the site remains sacred ground: the building has changed, but there is still a church at that location in the rural area west of Henderson, Minnesota.",
     ],
     locations: ["Prairie Mount (west of Henderson), Minnesota"],
-    facts: ["Installed at Prairie Mount: May 18, 1862"],
-    sources: [
-      "A.E. Winter autobiography (installation date)",
-      "Family visit / site notes (present-day church location)",
-    ],
   },
 
   {
@@ -94,15 +87,6 @@ const timeline = [
     ],
     quote: "They were married the 3rd day of July, 1862.",
     locations: ["Watertown, Wisconsin", "Milwaukee, Wisconsin", "Minnesota"],
-    facts: [
-      "Johanna Christina Posner born: April 6, 1842",
-      "Marriage date: July 3, 1862",
-      "Met and married after knowing each other 3 days",
-    ],
-    sources: [
-      "A.E. Winter autobiography (marriage date)",
-      "Anna Christiana Winter Goeglein biography (meeting + marriage story)",
-    ],
   },
 
   {
@@ -112,22 +96,11 @@ const timeline = [
     story: [
       "Barely had Winter returned from Milwaukee with his new wife when unrest escalated. In his autobiography, he described August 1862 as a time when attacks on settlers west and southwest of their settlement stirred fear across the region.",
       "When rumors spread that danger might reach them too, they fled to Henderson on a Tuesday forenoon. The threat didn’t materialize, and they returned the next day.",
-      "But fear rose again—late on a Friday night (Winter remembered it as the ‘2rd of August’). Neighbors roused them from sleep. Settlers formed a group: women and children were placed on wagons with bedding and a few belongings, while the men rode ponies so they could watch more closely.",
+      "Soon after—late on a Friday night (Winter remembered it as the ‘2rd of August’)—neighbors roused them again. Settlers formed a group: women and children were placed on wagons with bedding and a few belongings, while the men rode ponies so they could watch more closely.",
       "In Belle Plaine they were met by about 200 soldiers, who unloaded the wagons and took them for their own use as they hurried toward the fighting. Winter never again saw his pony.",
       "They remained sheltered in Belle Plaine until all was reported safe. Later, Winter traveled to Fort Ridgely after hearing of a horse left there unclaimed, but it was not his. Not long after, the government provided him another good horse, which he used on later journeys.",
     ],
     locations: ["Henderson, Minnesota", "Belle Plaine, Minnesota", "Fort Ridgely, Minnesota"],
-    facts: [
-      "Flight to Henderson (Tuesday forenoon), returned next day",
-      "Second alarm late Friday night (Winter’s memory: ‘2rd of August’)",
-      "Reached Belle Plaine; met ~200 soldiers; wagons/pony taken",
-      "Sought horse at Fort Ridgely; did not recover pony",
-      "Later provided a replacement horse",
-    ],
-    sources: [
-      "A.E. Winter autobiography (Aug 1862 events)",
-      "Anna Christiana Winter Goeglein biography (context: fled to fort/safe place; returned unharmed)",
-    ],
   },
 
   {
@@ -137,7 +110,6 @@ const timeline = [
     story: [
       "These were the years of the journey: serving scattered Lutheran congregations, traveling long distances, preaching wherever people gathered—sometimes in churches, sometimes in homes, sometimes wherever there was shelter.",
       "The work was not a single destination, but a chain of stops: sermons, prayers, pastoral care, and the constant question of who needed a visit next—and how far the next road would go.",
-      "Their marriage began inside this reality: travel, uncertainty, and communities that depended on the next visit as much as the next harvest.",
     ],
     quote:
       "We drove our fancy covered wagon to church, otherwise we walked then 3 miles to town.",
@@ -163,7 +135,6 @@ const timeline = [
     story: [
       "As time passed, the stories became memory—and memory became testimony. The family voice preserves what official records can’t: what it felt like, what it cost, and what carried them through.",
       "This is where the timeline becomes more than dates. It becomes a record of character: devotion, economy, service, and the quiet weight of responsibility.",
-      "Anna Christiana Winter Goeglein’s biography adds a personal lens—how decisions were made, how quickly life could change, and how faith shaped the courage to keep moving forward.",
     ],
     quote: "As long as I can remember, we also had daily devotions at the table…",
     locations: ["Family records", "Midwest"],
@@ -182,3 +153,68 @@ const timeline = [
     locations: ["Minnesota", "Midwest"],
   },
 ];
+
+function Chip({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-black/10 bg-white/50 px-3 py-1 text-xs">
+      {children}
+    </span>
+  );
+}
+
+export default function TimelinePage() {
+  return (
+    <main className="mx-auto max-w-5xl px-6 py-14">
+      <h1 className="text-3xl font-semibold">Timeline</h1>
+      <p className="mt-3 max-w-2xl opacity-80">
+        A narrative timeline drawn from Winter’s account and family records.
+      </p>
+
+      <div className="mt-10 space-y-8">
+        {timeline.map((t) => (
+          <article
+            key={t.year}
+            className="rounded-3xl border border-black/10 bg-white/40 p-7 shadow-sm"
+          >
+            <div className="text-xs tracking-[0.25em] uppercase opacity-60">
+              {t.year}
+            </div>
+
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+              {t.title}
+            </h2>
+
+            <p className="mt-2 opacity-75">{t.subtitle}</p>
+
+            <div className="mt-6 space-y-4 leading-relaxed">
+              {t.story.map((p, idx) => (
+                <p key={idx} className="opacity-85">
+                  {p}
+                </p>
+              ))}
+            </div>
+
+            {t.quote && (
+              <blockquote className="mt-6 rounded-2xl border border-black/10 bg-[#fbf6ea] p-5 italic opacity-80">
+                “{t.quote}”
+              </blockquote>
+            )}
+
+            {t.locations?.length ? (
+              <div className="mt-6">
+                <div className="text-xs tracking-[0.25em] uppercase opacity-60">
+                  Locations
+                </div>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {t.locations.map((loc) => (
+                    <Chip key={loc}>{loc}</Chip>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </article>
+        ))}
+      </div>
+    </main>
+  );
+}
