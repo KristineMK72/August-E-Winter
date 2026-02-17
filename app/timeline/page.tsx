@@ -36,6 +36,38 @@ const timeline = [
     locations: ["East Rushville, Ohio", "Fairfield County, Ohio"],
   },
 
+  // ✅ NEW ENTRY INSERTED HERE
+  {
+    year: "February 1861",
+    title: "From Ohio to the Minnesota frontier",
+    subtitle: "Train, stagecoach, ice roads, and a missed coach",
+    story: [
+      "Early in 1861, Winter was notified that he should serve as a missionary in Minnesota. He left his home in Ohio about the first of February and began the long winter journey west.",
+      "He traveled via Chicago and Milwaukee to La Crosse — as far as the railroad had yet been built. From there he took the stagecoach. From La Crosse to Hastings he crossed the Mississippi River, which was covered with ice and nearly two feet of snow.",
+      "At Hastings — then called 'Minnesota Landing' — the horses were changed and passengers stopped at the hotel. Winter believed he must have lingered too long, for when he returned, the coach had already left. Though he tried to catch it, the horses traveled faster than he could run. There was nothing left for him to do but to walk.",
+      "After only a few miles, a farmer bound for Winona with a sled offered him a ride. He waited there until noon for the next stagecoach.",
+      "From Hastings to St. Paul they traveled overland in bitter cold. The stage driver suggested greasing the runners so they would slip better, but it caused the vehicle to drop into ruts and bounce hard against the frozen road. Even so, they pushed onward as quickly as possible.",
+      "Winter reached St. Paul on February 12. Minneapolis was his destination, and he hired a team for $1.50 to travel the remaining ten miles.",
+    ],
+    quote:
+      "I must have been too slow, for on my return, I found, to my great dismay, that the coach had left… There was nothing left for me to do but to walk.",
+    facts: [
+      "Left Ohio: early February 1861",
+      "Reached St. Paul: February 12, 1861",
+      "Final leg to Minneapolis: hired team for $1.50",
+    ],
+    locations: [
+      "Ohio",
+      "Chicago, Illinois",
+      "Milwaukee, Wisconsin",
+      "La Crosse, Wisconsin",
+      "Hastings (Minnesota Landing), Minnesota",
+      "St. Paul, Minnesota",
+      "Minneapolis, Minnesota",
+    ],
+    sources: ["A.E. Winter autobiography (Minnesota experiences, 1861–1865)"],
+  },
+
   {
     year: "1856–1859",
     title: "St. John’s Prairie rises",
@@ -153,68 +185,3 @@ const timeline = [
     locations: ["Minnesota", "Midwest"],
   },
 ];
-
-function Chip({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="inline-flex items-center rounded-full border border-black/10 bg-white/50 px-3 py-1 text-xs">
-      {children}
-    </span>
-  );
-}
-
-export default function TimelinePage() {
-  return (
-    <main className="mx-auto max-w-5xl px-6 py-14">
-      <h1 className="text-3xl font-semibold">Timeline</h1>
-      <p className="mt-3 max-w-2xl opacity-80">
-        A narrative timeline drawn from Winter’s account and family records.
-      </p>
-
-      <div className="mt-10 space-y-8">
-        {timeline.map((t) => (
-          <article
-            key={t.year}
-            className="rounded-3xl border border-black/10 bg-white/40 p-7 shadow-sm"
-          >
-            <div className="text-xs tracking-[0.25em] uppercase opacity-60">
-              {t.year}
-            </div>
-
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
-              {t.title}
-            </h2>
-
-            <p className="mt-2 opacity-75">{t.subtitle}</p>
-
-            <div className="mt-6 space-y-4 leading-relaxed">
-              {t.story.map((p, idx) => (
-                <p key={idx} className="opacity-85">
-                  {p}
-                </p>
-              ))}
-            </div>
-
-            {t.quote && (
-              <blockquote className="mt-6 rounded-2xl border border-black/10 bg-[#fbf6ea] p-5 italic opacity-80">
-                “{t.quote}”
-              </blockquote>
-            )}
-
-            {t.locations?.length ? (
-              <div className="mt-6">
-                <div className="text-xs tracking-[0.25em] uppercase opacity-60">
-                  Locations
-                </div>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {t.locations.map((loc) => (
-                    <Chip key={loc}>{loc}</Chip>
-                  ))}
-                </div>
-              </div>
-            ) : null}
-          </article>
-        ))}
-      </div>
-    </main>
-  );
-}
