@@ -1,4 +1,17 @@
-const timeline = [
+type TimelineItem = {
+  year: string;
+  title: string;
+  subtitle: string;
+  story: string[];
+  quote?: string;
+  locations?: string[];
+
+  // Optional (safe to keep even if you don’t render them yet)
+  facts?: string[];
+  sources?: string[];
+};
+
+const timeline: TimelineItem[] = [
   {
     year: "1838",
     title: "A boy in Waldeck",
@@ -36,7 +49,6 @@ const timeline = [
     locations: ["East Rushville, Ohio", "Fairfield County, Ohio"],
   },
 
-  // ✅ NEW ENTRY INSERTED HERE
   {
     year: "February 1861",
     title: "From Ohio to the Minnesota frontier",
@@ -132,7 +144,11 @@ const timeline = [
       "In Belle Plaine they were met by about 200 soldiers, who unloaded the wagons and took them for their own use as they hurried toward the fighting. Winter never again saw his pony.",
       "They remained sheltered in Belle Plaine until all was reported safe. Later, Winter traveled to Fort Ridgely after hearing of a horse left there unclaimed, but it was not his. Not long after, the government provided him another good horse, which he used on later journeys.",
     ],
-    locations: ["Henderson, Minnesota", "Belle Plaine, Minnesota", "Fort Ridgely, Minnesota"],
+    locations: [
+      "Henderson, Minnesota",
+      "Belle Plaine, Minnesota",
+      "Fort Ridgely, Minnesota",
+    ],
   },
 
   {
@@ -185,3 +201,68 @@ const timeline = [
     locations: ["Minnesota", "Midwest"],
   },
 ];
+
+function Chip({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-black/10 bg-white/50 px-3 py-1 text-xs">
+      {children}
+    </span>
+  );
+}
+
+export default function TimelinePage() {
+  return (
+    <main className="mx-auto max-w-5xl px-6 py-14">
+      <h1 className="text-3xl font-semibold">Timeline</h1>
+      <p className="mt-3 max-w-2xl opacity-80">
+        A narrative timeline drawn from Winter’s account and family records.
+      </p>
+
+      <div className="mt-10 space-y-8">
+        {timeline.map((t) => (
+          <article
+            key={t.year}
+            className="rounded-3xl border border-black/10 bg-white/40 p-7 shadow-sm"
+          >
+            <div className="text-xs tracking-[0.25em] uppercase opacity-60">
+              {t.year}
+            </div>
+
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">
+              {t.title}
+            </h2>
+
+            <p className="mt-2 opacity-75">{t.subtitle}</p>
+
+            <div className="mt-6 space-y-4 leading-relaxed">
+              {t.story.map((p, idx) => (
+                <p key={idx} className="opacity-85">
+                  {p}
+                </p>
+              ))}
+            </div>
+
+            {t.quote && (
+              <blockquote className="mt-6 rounded-2xl border border-black/10 bg-[#fbf6ea] p-5 italic opacity-80">
+                “{t.quote}”
+              </blockquote>
+            )}
+
+            {t.locations?.length ? (
+              <div className="mt-6">
+                <div className="text-xs tracking-[0.25em] uppercase opacity-60">
+                  Locations
+                </div>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {t.locations.map((loc) => (
+                    <Chip key={loc}>{loc}</Chip>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </article>
+        ))}
+      </div>
+    </main>
+  );
+}
