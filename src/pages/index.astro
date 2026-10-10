@@ -4,22 +4,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 const portraitSrc = "/17C4EEED-3B01-413C-B86D-004BC65A7095.png";
 const familySrc = "/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png";
 
-// Public-domain period images (Wikimedia Commons)
+// Public-domain period images via Wikimedia Special:FilePath (more reliable than thumb paths)
 const eraImages = [
   {
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Concord_stagecoach_1869.png/640px-Concord_stagecoach_1869.png",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/Concord_stagecoach_1869.png?width=800",
     alt: "Concord stagecoach, American West, circa 1869",
     title: "Stagecoach, c. 1869",
     credit: "How Winter traveled after the rails ended",
   },
   {
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Hennepin_Avenue_Bridge_1865.jpg/640px-Hennepin_Avenue_Bridge_1865.jpg",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/Hennepin_Avenue_Bridge_1865.jpg?width=800",
     alt: "First Hennepin Avenue Bridge, Minneapolis, circa 1865",
     title: "Hennepin Avenue Bridge, c. 1865",
     credit: "Minneapolis — near the end of his 1861 journey",
   },
   {
-    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/1862_Johnson_Map_of_Minnesota_and_Dakota_-_Geographicus_-_MNDK-johnson-1862.jpg/640px-1862_Johnson_Map_of_Minnesota_and_Dakota_-_Geographicus_-_MNDK-johnson-1862.jpg",
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/1862_Johnson_Map_of_Minnesota_and_Dakota_-_Geographicus_-_MNDK-johnson-1862.jpg?width=800",
     alt: "1862 Johnson map of Minnesota and Dakota",
     title: "Minnesota & Dakota, 1862",
     credit: "The frontier as mapped in Winter’s missionary years",
@@ -85,7 +85,6 @@ const eraImages = [
     </div>
   </section>
 
-  <!-- Period places -->
   <section class="era">
     <div class="container">
       <h2 class="section-title">The world he traveled</h2>
@@ -99,7 +98,7 @@ const eraImages = [
         {
           eraImages.map((img) => (
             <figure class="era-card card pop">
-              <img src={img.src} alt={img.alt} loading="lazy" width="640" height="480" />
+              <img src={img.src} alt={img.alt} loading="lazy" width="800" height="600" />
               <figcaption>
                 <strong>{img.title}</strong>
                 {img.credit}
