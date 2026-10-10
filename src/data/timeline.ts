@@ -5,10 +5,8 @@ export type TimelineImage = {
 };
 
 export type TimelineMap = {
-  /** OpenStreetMap embed bbox: minLon,minLat,maxLon,maxLat */
   bbox: string;
   label: string;
-  /** Optional marker lat,lon */
   marker?: string;
 };
 
@@ -45,6 +43,11 @@ export const timeline: TimelineItem[] = [
         alt: "Historic engraving of Waldeck, 1655",
         caption: "Waldeck \u2014 Matth\u00e4us Merian engraving (1655)",
       },
+      {
+        src: wiki("Waldeck_um_1800_mit_Elsterberg.jpg"),
+        alt: "Waldeck around 1800",
+        caption: "Waldeck with Elsterberg, circa 1800",
+      },
     ],
     map: {
       bbox: "8.85,51.15,9.15,51.35",
@@ -64,9 +67,14 @@ export const timeline: TimelineItem[] = [
     locations: ["Bremen, Germany", "Baltimore, Maryland", "East Rushville, Ohio"],
     images: [
       {
-        src: wiki("Concord_stagecoach_1869.png"),
-        alt: "Concord stagecoach, circa 1869",
-        caption: "Overland travel of the era \u2014 Concord stagecoach, c. 1869",
+        src: wiki("Below_deck_on_the_emigrant_ship_St_Vincent_(1829)_in_1844.jpg"),
+        alt: "Below deck on an emigrant ship, 1844",
+        caption: "Below deck on an emigrant ship (Illustrated London News, 1844)",
+      },
+      {
+        src: wiki("Sailing_Ship_of_1840_(imp-cswc-GB-237-CSWC47-LS16-015).jpg"),
+        alt: "Sailing ship of 1840",
+        caption: "A sailing ship of the 1840s \u2014 the kind of vessel that crossed the Atlantic",
       },
     ],
     map: {
@@ -85,6 +93,13 @@ export const timeline: TimelineItem[] = [
     ],
     quote: "He demanded obedience and no arguments were allowed. His word was Law.",
     locations: ["East Rushville, Ohio", "Fairfield County, Ohio"],
+    images: [
+      {
+        src: wiki("1850_Mitchell_Map_of_Ohio_-_Geographicus_-_Ohio-m-50.jpg"),
+        alt: "1850 map of Ohio",
+        caption: "Ohio as mapped in 1850 \u2014 the Winters\u2019 new home state",
+      },
+    ],
     map: {
       bbox: "-82.55,39.75,-82.25,39.95",
       label: "East Rushville / Fairfield County, Ohio",
@@ -121,14 +136,29 @@ export const timeline: TimelineItem[] = [
     ],
     images: [
       {
+        src: wiki("LaCrosseWI_1867.jpg"),
+        alt: "La Crosse, Wisconsin, 1867",
+        caption: "La Crosse, Wisconsin, 1867 \u2014 end of the railroad line",
+      },
+      {
         src: wiki("Concord_stagecoach_1869.png"),
         alt: "Concord stagecoach, c. 1869",
         caption: "Stagecoach travel after the rails ended",
       },
       {
+        src: wiki("St_Paul_(1865).jpg"),
+        alt: "St. Paul, Minnesota, 1865",
+        caption: "St. Paul, 1865 \u2014 he arrived here February 12, 1861",
+      },
+      {
         src: wiki("Hennepin_Avenue_Bridge_1865.jpg"),
         alt: "Hennepin Avenue Bridge, Minneapolis, c. 1865",
         caption: "Minneapolis \u2014 Hennepin Avenue Bridge, c. 1865",
+      },
+      {
+        src: wiki("Minneapolis_Suspension_Bridge.jpg"),
+        alt: "Minneapolis Suspension Bridge",
+        caption: "Minneapolis Suspension Bridge in the 1860s",
       },
       {
         src: wiki(
@@ -155,6 +185,13 @@ export const timeline: TimelineItem[] = [
     quote:
       "In the early fifties several Lutheran families\u2026 settled in the Prairie Mount area.",
     locations: ["Sibley County, Minnesota", "St. John\u2019s Prairie"],
+    images: [
+      {
+        src: wiki("WestSide-1869.jpg"),
+        alt: "West side of Minneapolis area, 1869",
+        caption: "Minnesota river towns in the late 1860s",
+      },
+    ],
     map: {
       bbox: "-94.35,44.40,-93.85,44.70",
       label: "Sibley County, Minnesota",
@@ -190,6 +227,15 @@ export const timeline: TimelineItem[] = [
       "Even today the site remains sacred ground: the building has changed, but there is still a church at that location in the rural area west of Henderson, Minnesota.",
     ],
     locations: ["Prairie Mount (west of Henderson), Minnesota"],
+    images: [
+      {
+        src: wiki(
+          "Northern_Pacific_Railroad_exploring_party_departing_Minneapolis,_1869_(TRANSPORT_286).jpg"
+        ),
+        alt: "Railroad exploring party departing Minneapolis, 1869",
+        caption: "Frontier travel from Minneapolis, 1869",
+      },
+    ],
     map: {
       bbox: "-94.00,44.45,-93.60,44.65",
       label: "Henderson / Prairie Mount area",
@@ -267,6 +313,11 @@ export const timeline: TimelineItem[] = [
         src: wiki("Hennepin_Avenue_Bridge_1865.jpg"),
         alt: "Hennepin Avenue Bridge c. 1865",
         caption: "Minneapolis in the 1860s",
+      },
+      {
+        src: wiki("Sawmills.jpg"),
+        alt: "Sawmills on the Mississippi, 1860s",
+        caption: "Mississippi sawmills \u2014 the industrial frontier",
       },
     ],
     map: {
