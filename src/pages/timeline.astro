@@ -1,66 +1,138 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { timeline } from "../data/timeline";
+
+function osmEmbed(bbox: string) {
+  return `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik`;
+}
 ---
 
 <BaseLayout
-  title="Timeline — August Edward Winter"
-  description="A narrative timeline of August Edward Winter’s life and missionary journey, 1838–1927."
+  title="Timeline \u2014 August Edward Winter"
+  description="A narrative timeline of August Edward Winter\u2019s life and missionary journey, 1838\u20131927 \u2014 with maps, period images, and locations."
 >
   <section class="timeline-page">
     <div class="container">
-      <header class="page-header">
-        <h1>Timeline</h1>
+      <header class="page-header fade-up">
+        <p class="eyebrow">1838 \u2013 1927</p>
+        <h1>The Journey</h1>
         <p class="page-lead">
-          A narrative timeline drawn from Winter’s account and family records—
-          from a boyhood in Waldeck to the Minnesota frontier and a life of
-          quiet, steadfast service.
+          From a boyhood in Waldeck to the Minnesota frontier \u2014 maps, places,
+          and period images along the road.
         </p>
       </header>
 
+      <!-- Journey strip -->
+      <nav class="journey-strip card pop fade-up" aria-label="Jump to a year">
+        {
+          timeline.map((item) => (
+            <a href={`#year-${item.year.replace(/[^a-zA-Z0-9]/g, "-")}`} class="journey-pill">
+              <span class="jp-year">{item.year.split(" ")[0]}</span>
+              <span class="jp-title">{item.title}</span>
+            </a>
+          ))
+        }
+      </nav>
+
       <div class="timeline-list">
         {
-          timeline.map((item, i) => (
-            <article class="timeline-card card pop fade-up" style={`animation-delay: ${Math.min(i * 0.04, 0.3)}s`}>
-              <div class="year">{item.year}</div>
-              <h2>{item.title}</h2>
-              <p class="subtitle">{item.subtitle}</p>
-
-              <div class="story">
-                {item.story.map((p) => (
-                  <p>{p}</p>
-                ))}
-              </div>
-
-              {item.quote && (
-                <blockquote class="quote">
-                  “{item.quote}”
-                </blockquote>
-              )}
-
-              {item.facts && item.facts.length > 0 && (
-                <div class="facts">
-                  <div class="facts-label">Key facts</div>
-                  <ul>
-                    {item.facts.map((f) => (
-                      <li>{f}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {item.locations && item.locations.length > 0 && (
-                <div class="locations">
-                  <div class="locations-label">Locations</div>
-                  <div class="chips">
-                    {item.locations.map((loc) => (
-                      <span class="chip">{loc}</span>
-                    ))}
+          timeline.map((item, i) => {
+            const id = `year-${item.year.replace(/[^a-zA-Z0-9]/g, "-")}`;
+            const side = i % 2 === 0 ? "left" : "right";
+            return (
+              <article
+                id={id}
+                class={`timeline-card card pop fade-up side-${side}`}
+                style={`animation-delay: ${Math.min(i * 0.05, 0.35)}s`}
+              >
+                <div class="card-top">
+                  <div class="year-badge">{item.year}</div>
+                  <div class="card-heading">
+                    <h2>{item.title}</h2>
+                    <p class="subtitle">{item.subtitle}</p>
                   </div>
                 </div>
-              )}
-            </article>
-          ))
+
+                {/* Image gallery */}
+                {item.images && item.images.length > 0 && (
+                  <div class={`img-gallery cols-${Math.min(item.images.length, 3)}`}>
+                    {item.images.map((img) => (
+                      <figure class="gallery-fig pop">
+                        <img
+                          src={img.src}
+                          alt={img.alt}
+                          loading="lazy"
+                          width="900"
+                          height="600"
+                        />
+                        <figcaption>{img.caption}</figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                )}
+
+                <div class="story">
+                  {item.story.map((p) => (
+                    <p>{p}</p>
+                  ))}
+                </div>
+
+                {item.quote && (
+                  <blockquote class="quote pop">
+                    \u201c{item.quote}\u201d
+                  </blockquote>
+                )}
+
+                {/* Map + locations row */}
+                {(item.map || (item.locations && item.locations.length > 0)) && (
+                  <div class="place-block">
+                    {item.map && (
+                      <div class="map-frame card pop">
+                        <iframe
+                          title={item.map.label}
+                          src={osmEmbed(item.map.bbox)}
+                          loading="lazy"
+                          referrerpolicy="no-referrer-when-downgrade"
+                        ></iframe>
+                        <div class="map-label">{item.map.label}</div>
+                      </div>
+                    )}
+
+                    <div class="place-meta">
+                      {item.locations && item.locations.length > 0 && (
+                        <div class="locations">
+                          <div class="meta-label">Locations</div>
+                          <div class="chips">
+                            {item.locations.map((loc) => (
+                              <a
+                                class="chip chip-link"
+                                href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(loc)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                \ud83d\udccd {loc}
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {item.facts && item.facts.length > 0 && (
+                        <div class="facts">
+                          <div class="meta-label">Key facts</div>
+                          <ul>
+                            {item.facts.map((f) => (
+                              <li>{f}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </article>
+            );
+          })
         }
       </div>
     </div>
@@ -69,17 +141,26 @@ import { timeline } from "../data/timeline";
 
 <style>
   .timeline-page {
-    padding: 2.5rem 0 4rem;
+    padding: 2.25rem 0 4.5rem;
   }
 
   .page-header {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.75rem;
     max-width: 40rem;
   }
 
+  .eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
   h1 {
-    font-size: clamp(1.85rem, 4vw, 2.4rem);
-    margin: 0 0 0.6rem;
+    font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+    margin: 0 0 0.55rem;
   }
 
   .page-lead {
@@ -88,40 +169,159 @@ import { timeline } from "../data/timeline";
     font-size: 1.05rem;
   }
 
+  /* Journey strip */
+  .journey-strip {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.75rem;
+    margin-bottom: 2rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .journey-pill {
+    flex: 0 0 auto;
+    text-decoration: none;
+    padding: 0.55rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.55);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    max-width: 11rem;
+  }
+
+  .journey-pill:hover {
+    transform: translateY(-3px) scale(1.03);
+    background: #fff;
+    box-shadow: var(--shadow);
+  }
+
+  .jp-year {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .jp-title {
+    display: block;
+    font-size: 0.85rem;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .timeline-list {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.75rem;
   }
 
   .timeline-card {
-    padding: 1.35rem 1.25rem;
+    padding: 1.25rem 1.15rem 1.4rem;
+    position: relative;
   }
 
   @media (min-width: 640px) {
     .timeline-card {
-      padding: 1.6rem 1.75rem;
+      padding: 1.6rem 1.75rem 1.75rem;
     }
   }
 
-  .year {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.35rem;
+  .card-top {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
   }
 
-  .timeline-card h2 {
-    font-size: clamp(1.25rem, 3vw, 1.45rem);
-    margin: 0 0 0.25rem;
+  .year-badge {
+    flex-shrink: 0;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--accent);
+    padding: 0.4rem 0.65rem;
+    border-radius: 999px;
+    box-shadow: 0 6px 16px rgba(124, 45, 18, 0.25);
+  }
+
+  .card-heading h2 {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    margin: 0 0 0.2rem;
   }
 
   .subtitle {
-    margin: 0 0 1.1rem;
+    margin: 0;
     color: var(--ink-muted);
-    font-size: 0.98rem;
+    font-size: 0.95rem;
+  }
+
+  /* Image galleries */
+  .img-gallery {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0 0 1.15rem;
+  }
+
+  .img-gallery.cols-1 {
+    grid-template-columns: 1fr;
+  }
+
+  .img-gallery.cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .img-gallery.cols-3 {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .img-gallery.cols-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    .img-gallery.cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .gallery-fig {
+    margin: 0;
+    overflow: hidden;
+    border-radius: calc(var(--radius) - 4px);
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: var(--shadow);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  }
+
+  .gallery-fig:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-pop);
+  }
+
+  .gallery-fig img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .gallery-fig:hover img {
+    transform: scale(1.05);
+  }
+
+  .gallery-fig figcaption {
+    padding: 0.55rem 0.7rem 0.7rem;
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    font-family: var(--font-sans);
   }
 
   .story p {
@@ -133,18 +333,79 @@ import { timeline } from "../data/timeline";
     margin-bottom: 0;
   }
 
-  .facts {
-    margin-top: 1.25rem;
+  .quote.pop:hover {
+    transform: translateY(-3px);
   }
 
-  .facts-label,
-  .locations-label {
+  /* Places */
+  .place-block {
+    margin-top: 1.35rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 800px) {
+    .place-block {
+      grid-template-columns: 1.2fr 1fr;
+      align-items: start;
+    }
+  }
+
+  .map-frame {
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+  }
+
+  .map-frame iframe {
+    display: block;
+    width: 100%;
+    height: 220px;
+    border: 0;
+  }
+
+  @media (min-width: 640px) {
+    .map-frame iframe {
+      height: 260px;
+    }
+  }
+
+  .map-label {
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    border-top: 1px solid var(--border);
+    background: rgba(255, 252, 245, 0.9);
+  }
+
+  .meta-label {
     font-family: var(--font-sans);
     font-size: 0.7rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     opacity: 0.6;
     margin-bottom: 0.45rem;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .chip-link {
+    text-decoration: none;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .chip-link:hover {
+    transform: translateY(-2px) scale(1.04);
+    background: #fff;
+  }
+
+  .facts {
+    margin-top: 1rem;
   }
 
   .facts ul {
@@ -158,13 +419,31 @@ import { timeline } from "../data/timeline";
     margin-bottom: 0.25rem;
   }
 
-  .locations {
-    margin-top: 1.25rem;
+  /* Soft alternating accent line */
+  .timeline-card.side-left::before,
+  .timeline-card.side-right::before {
+    content: "";
+    position: absolute;
+    top: 1.4rem;
+    width: 4px;
+    height: 2.2rem;
+    border-radius: 4px;
+    background: var(--gold);
+    opacity: 0.55;
   }
 
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.45rem;
+  .timeline-card.side-left::before {
+    left: 0;
+  }
+
+  .timeline-card.side-right::before {
+    right: 0;
+  }
+
+  @media (max-width: 639px) {
+    .timeline-card.side-right::before {
+      left: 0;
+      right: auto;
+    }
   }
 </style>
