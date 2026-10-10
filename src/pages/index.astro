@@ -1,15 +1,36 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-// Use the photos already in public/ (original UUID filenames)
 const portraitSrc = "/17C4EEED-3B01-413C-B86D-004BC65A7095.png";
 const familySrc = "/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png";
+
+// Public-domain period images (Wikimedia Commons)
+const eraImages = [
+  {
+    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Concord_stagecoach_1869.png/640px-Concord_stagecoach_1869.png",
+    alt: "Concord stagecoach, American West, circa 1869",
+    title: "Stagecoach, c. 1869",
+    credit: "How Winter traveled after the rails ended",
+  },
+  {
+    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Hennepin_Avenue_Bridge_1865.jpg/640px-Hennepin_Avenue_Bridge_1865.jpg",
+    alt: "First Hennepin Avenue Bridge, Minneapolis, circa 1865",
+    title: "Hennepin Avenue Bridge, c. 1865",
+    credit: "Minneapolis — near the end of his 1861 journey",
+  },
+  {
+    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/1862_Johnson_Map_of_Minnesota_and_Dakota_-_Geographicus_-_MNDK-johnson-1862.jpg/640px-1862_Johnson_Map_of_Minnesota_and_Dakota_-_Geographicus_-_MNDK-johnson-1862.jpg",
+    alt: "1862 Johnson map of Minnesota and Dakota",
+    title: "Minnesota & Dakota, 1862",
+    credit: "The frontier as mapped in Winter’s missionary years",
+  },
+];
 ---
 
 <BaseLayout>
   <section class="hero">
     <div class="container hero-inner">
-      <div class="portrait-wrap fade-up">
+      <div class="portrait-wrap fade-up pop-frame">
         <img
           src={portraitSrc}
           alt="Portrait of August Edward Winter"
@@ -45,7 +66,7 @@ const familySrc = "/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png";
         Four generations of the Winter family, carrying the story forward.
       </p>
 
-      <figure class="family-card card">
+      <figure class="family-card card pop">
         <img
           src={familySrc}
           alt="Four generations of the Winter family"
@@ -64,42 +85,79 @@ const familySrc = "/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png";
     </div>
   </section>
 
+  <!-- Period places -->
+  <section class="era">
+    <div class="container">
+      <h2 class="section-title">The world he traveled</h2>
+      <p class="section-lead">
+        Public-domain views from the same era and places—stage roads, the
+        Mississippi at Minneapolis, and the Minnesota frontier as it was mapped
+        in 1862.
+      </p>
+
+      <div class="era-grid">
+        {
+          eraImages.map((img) => (
+            <figure class="era-card card pop">
+              <img src={img.src} alt={img.alt} loading="lazy" width="640" height="480" />
+              <figcaption>
+                <strong>{img.title}</strong>
+                {img.credit}
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
   <section class="path">
     <div class="container">
       <h2 class="section-title">The Journey at a Glance</h2>
       <div class="path-grid">
-        <a href="/timeline" class="path-card card">
+        <a href="/timeline" class="path-card card pop">
           <span class="path-year">1838</span>
           <span class="path-label">Born in Waldeck, Germany</span>
         </a>
-        <a href="/timeline" class="path-card card">
+        <a href="/timeline" class="path-card card pop">
           <span class="path-year">1843</span>
           <span class="path-label">Voyage to America</span>
         </a>
-        <a href="/timeline" class="path-card card">
+        <a href="/timeline" class="path-card card pop">
           <span class="path-year">1861</span>
           <span class="path-label">Called to Minnesota frontier</span>
         </a>
-        <a href="/timeline" class="path-card card">
+        <a href="/timeline" class="path-card card pop">
           <span class="path-year">1862</span>
           <span class="path-label">Ordained · Married · Flight</span>
         </a>
-        <a href="/timeline" class="path-card card">
+        <a href="/timeline" class="path-card card pop">
           <span class="path-year">1862–65</span>
           <span class="path-label">Missionary years</span>
         </a>
-        <a href="/timeline" class="path-card card">
+        <a href="/timeline" class="path-card card pop">
           <span class="path-year">1927</span>
           <span class="path-label">Home in peace</span>
         </a>
       </div>
     </div>
   </section>
+
+  <section class="hopper-note">
+    <div class="container">
+      <p>
+        <span aria-hidden="true">🦗</span>
+        <em>Watch for grasshoppers</em> — a playful nod to the Rocky Mountain
+        locust swarms that swept Minnesota in the 1870s, after Winter’s main
+        missionary years but during his lifetime on the prairie.
+      </p>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
   .hero {
-    padding: 3.5rem 0 4rem;
+    padding: 3rem 0 3.5rem;
     text-align: center;
   }
 
@@ -108,14 +166,20 @@ const familySrc = "/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png";
   }
 
   .portrait-wrap {
-    width: 240px;
-    height: 240px;
+    width: min(240px, 55vw);
+    height: min(240px, 55vw);
     margin: 0 auto 1.5rem;
     border-radius: 50%;
     overflow: hidden;
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
     background: rgba(255, 255, 255, 0.4);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+  }
+
+  .portrait-wrap.pop-frame:hover {
+    transform: scale(1.06) translateY(-6px);
+    box-shadow: var(--shadow-pop);
   }
 
   .portrait {
@@ -125,7 +189,7 @@ const familySrc = "/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png";
   }
 
   h1 {
-    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-size: clamp(1.85rem, 5vw, 2.75rem);
     margin: 0 0 0.4rem;
   }
 
@@ -163,7 +227,7 @@ const familySrc = "/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png";
   }
 
   .btn:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 
   .btn.primary {
@@ -186,20 +250,22 @@ const familySrc = "/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png";
     background: rgba(0, 0, 0, 0.04);
   }
 
-  .family {
-    padding: 1rem 0 3.5rem;
+  .family,
+  .era,
+  .path {
+    padding: 1rem 0 3rem;
   }
 
   .section-title {
     text-align: center;
-    font-size: 1.65rem;
+    font-size: clamp(1.35rem, 3vw, 1.65rem);
     margin: 0 0 0.4rem;
   }
 
   .section-lead {
     text-align: center;
     margin: 0 auto 1.5rem;
-    max-width: 28rem;
+    max-width: 32rem;
     color: var(--ink-muted);
   }
 
@@ -222,10 +288,6 @@ const familySrc = "/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png";
     color: var(--ink-muted);
   }
 
-  .path {
-    padding: 0 0 4rem;
-  }
-
   .path-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -237,12 +299,6 @@ const familySrc = "/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png";
     text-decoration: none;
     padding: 1.1rem 1rem;
     text-align: center;
-    transition: transform 0.15s, box-shadow 0.2s;
-  }
-
-  .path-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 40px rgba(28, 25, 23, 0.12);
   }
 
   .path-year {
@@ -258,5 +314,17 @@ const familySrc = "/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png";
   .path-label {
     font-size: 0.95rem;
     line-height: 1.35;
+  }
+
+  .hopper-note {
+    padding: 0 0 2.5rem;
+  }
+
+  .hopper-note p {
+    text-align: center;
+    max-width: 28rem;
+    margin: 0 auto;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
   }
 </style>
