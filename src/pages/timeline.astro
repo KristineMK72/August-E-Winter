@@ -1,0 +1,164 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { timeline } from "../data/timeline";
+---
+
+<BaseLayout
+  title="Timeline — August Edward Winter"
+  description="A narrative timeline of August Edward Winter’s life and missionary journey, 1838–1927."
+>
+  <section class="timeline-page">
+    <div class="container">
+      <header class="page-header">
+        <h1>Timeline</h1>
+        <p class="page-lead">
+          A narrative timeline drawn from Winter’s account and family records—
+          from a boyhood in Waldeck to the Minnesota frontier and a life of
+          quiet, steadfast service.
+        </p>
+      </header>
+
+      <div class="timeline-list">
+        {
+          timeline.map((item, i) => (
+            <article class="timeline-card card fade-up" style={`animation-delay: ${Math.min(i * 0.04, 0.3)}s`}>
+              <div class="year">{item.year}</div>
+              <h2>{item.title}</h2>
+              <p class="subtitle">{item.subtitle}</p>
+
+              <div class="story">
+                {item.story.map((p) => (
+                  <p>{p}</p>
+                ))}
+              </div>
+
+              {item.quote && (
+                <blockquote class="quote">
+                  “{item.quote}”
+                </blockquote>
+              )}
+
+              {item.facts && item.facts.length > 0 && (
+                <div class="facts">
+                  <div class="facts-label">Key facts</div>
+                  <ul>
+                    {item.facts.map((f) => (
+                      <li>{f}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {item.locations && item.locations.length > 0 && (
+                <div class="locations">
+                  <div class="locations-label">Locations</div>
+                  <div class="chips">
+                    {item.locations.map((loc) => (
+                      <span class="chip">{loc}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .timeline-page {
+    padding: 2.5rem 0 4rem;
+  }
+
+  .page-header {
+    margin-bottom: 2.5rem;
+    max-width: 40rem;
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 4vw, 2.4rem);
+    margin: 0 0 0.6rem;
+  }
+
+  .page-lead {
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: 1.05rem;
+  }
+
+  .timeline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .timeline-card {
+    padding: 1.6rem 1.75rem;
+  }
+
+  .year {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+
+  .timeline-card h2 {
+    font-size: 1.45rem;
+    margin: 0 0 0.25rem;
+  }
+
+  .subtitle {
+    margin: 0 0 1.1rem;
+    color: var(--ink-muted);
+    font-size: 0.98rem;
+  }
+
+  .story p {
+    margin: 0 0 0.85rem;
+    opacity: 0.92;
+  }
+
+  .story p:last-child {
+    margin-bottom: 0;
+  }
+
+  .facts {
+    margin-top: 1.25rem;
+  }
+
+  .facts-label,
+  .locations-label {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 0.45rem;
+  }
+
+  .facts ul {
+    margin: 0;
+    padding-left: 1.15rem;
+    color: var(--ink-muted);
+    font-size: 0.95rem;
+  }
+
+  .facts li {
+    margin-bottom: 0.25rem;
+  }
+
+  .locations {
+    margin-top: 1.25rem;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+</style>

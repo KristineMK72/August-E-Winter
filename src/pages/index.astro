@@ -1,0 +1,258 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="portrait-wrap fade-up">
+        <img
+          src="/august-portrait.png"
+          alt="Portrait of August Edward Winter"
+          width="520"
+          height="520"
+          class="portrait"
+        />
+      </div>
+
+      <h1 class="fade-up" style="animation-delay: 0.08s">
+        August Edward Winter
+      </h1>
+      <p class="hero-meta fade-up" style="animation-delay: 0.12s">
+        Lutheran Missionary · 1838–1927
+      </p>
+      <p class="hero-lead fade-up" style="animation-delay: 0.18s">
+        A narrative reconstruction of Winter’s missionary journey from 1861–1865,
+        drawn from his published account and family records—faith, ice roads,
+        frontier congregations, and the quiet endurance of a life given to service.
+      </p>
+
+      <div class="hero-actions fade-up" style="animation-delay: 0.24s">
+        <a href="/timeline" class="btn primary">Explore the Timeline</a>
+        <a href="/sources" class="btn ghost">Sources &amp; Legacy</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="family">
+    <div class="container">
+      <h2 class="section-title">Family Legacy</h2>
+      <p class="section-lead">
+        Four generations of the Winter family, carrying the story forward.
+      </p>
+
+      <figure class="family-card card">
+        <img
+          src="/winter-family.png"
+          alt="Four generations of the Winter family"
+          width="1400"
+          height="900"
+          class="family-photo"
+          loading="lazy"
+        />
+        <figcaption>
+          <strong>AE Winter</strong> (1838–1927) ·
+          <strong>Daniel Winter</strong> (1866–1948) ·
+          <strong>Albert Winter</strong> (1893–1968) ·
+          <strong>Lillian Rose Louise Winter</strong> (1918–2005)
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="path">
+    <div class="container">
+      <h2 class="section-title">The Journey at a Glance</h2>
+      <div class="path-grid">
+        <a href="/timeline" class="path-card card">
+          <span class="path-year">1838</span>
+          <span class="path-label">Born in Waldeck, Germany</span>
+        </a>
+        <a href="/timeline" class="path-card card">
+          <span class="path-year">1843</span>
+          <span class="path-label">Voyage to America</span>
+        </a>
+        <a href="/timeline" class="path-card card">
+          <span class="path-year">1861</span>
+          <span class="path-label">Called to Minnesota frontier</span>
+        </a>
+        <a href="/timeline" class="path-card card">
+          <span class="path-year">1862</span>
+          <span class="path-label">Ordained · Married · Flight</span>
+        </a>
+        <a href="/timeline" class="path-card card">
+          <span class="path-year">1862–65</span>
+          <span class="path-label">Missionary years</span>
+        </a>
+        <a href="/timeline" class="path-card card">
+          <span class="path-year">1927</span>
+          <span class="path-label">Home in peace</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 3.5rem 0 4rem;
+    text-align: center;
+  }
+
+  .hero-inner {
+    max-width: 720px;
+  }
+
+  .portrait-wrap {
+    width: 240px;
+    height: 240px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    background: rgba(255, 255, 255, 0.4);
+  }
+
+  .portrait {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    margin: 0 0 0.4rem;
+  }
+
+  .hero-meta {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-muted);
+  }
+
+  .hero-lead {
+    margin: 1.25rem auto 0;
+    max-width: 36rem;
+    opacity: 0.9;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1.75rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.7rem 1.35rem;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn.primary {
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid transparent;
+  }
+
+  .btn.primary:hover {
+    background: var(--accent-soft);
+  }
+
+  .btn.ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--ink);
+  }
+
+  .btn.ghost:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  .family {
+    padding: 1rem 0 3.5rem;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 1.65rem;
+    margin: 0 0 0.4rem;
+  }
+
+  .section-lead {
+    text-align: center;
+    margin: 0 auto 1.5rem;
+    max-width: 28rem;
+    color: var(--ink-muted);
+  }
+
+  .family-card {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0.75rem;
+    overflow: hidden;
+  }
+
+  .family-photo {
+    width: 100%;
+    border-radius: calc(var(--radius) - 4px);
+  }
+
+  .family-card figcaption {
+    padding: 0.9rem 0.5rem 0.35rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+  }
+
+  .path {
+    padding: 0 0 4rem;
+  }
+
+  .path-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.85rem;
+    margin-top: 1.25rem;
+  }
+
+  .path-card {
+    text-decoration: none;
+    padding: 1.1rem 1rem;
+    text-align: center;
+    transition: transform 0.15s, box-shadow 0.2s;
+  }
+
+  .path-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(28, 25, 23, 0.12);
+  }
+
+  .path-year {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+
+  .path-label {
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+</style>
