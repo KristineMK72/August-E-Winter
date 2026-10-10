@@ -7,7 +7,7 @@
   --accent: #7c2d12;
   --accent-soft: #9a3412;
   --gold: #a16207;
-  --card: rgba(255, 252, 245, 0.78);
+  --card: rgba(255, 252, 245, 0.82);
   --card-solid: #fffcf5;
   --border: rgba(28, 25, 23, 0.12);
   --shadow: 0 12px 40px rgba(28, 25, 23, 0.08);
@@ -39,16 +39,38 @@ body {
   overflow-x: hidden;
 }
 
+/* Layer 1: warm paper wash + soft gold/ink glows */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: -1;
+  z-index: -2;
   background:
-    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(161, 98, 7, 0.06), transparent 50%),
-    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(124, 45, 18, 0.05), transparent 45%),
-    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+    radial-gradient(ellipse 70% 45% at 12% 8%, rgba(161, 98, 7, 0.09), transparent 55%),
+    radial-gradient(ellipse 55% 40% at 92% 88%, rgba(124, 45, 18, 0.07), transparent 50%),
+    radial-gradient(ellipse 50% 35% at 50% 50%, rgba(255, 252, 245, 0.35), transparent 70%),
+    linear-gradient(180deg, #faf6ec 0%, var(--paper) 40%, var(--paper-deep) 100%);
+}
+
+/* Layer 2: paper grain + faint prairie grass silhouettes + vignette */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 1;
+  background-image:
+    /* fine grain */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E"),
+    /* prairie grass bottom-left */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120' fill='none'%3E%3Cpath d='M20 120 Q28 40 36 120 M40 120 Q50 25 58 120 M62 120 Q72 50 80 120 M90 120 Q98 30 106 120 M115 120 Q125 45 132 120 M145 120 Q155 20 162 120 M175 120 Q183 55 190 120 M205 120 Q215 35 222 120 M235 120 Q245 48 252 120 M270 120 Q280 28 288 120 M300 120 Q310 42 318 120 M335 120 Q345 22 352 120 M370 120 Q380 50 388 120' stroke='%23a16207' stroke-width='1.2' stroke-opacity='0.12'/%3E%3C/svg%3E"),
+    /* soft edge vignette */
+    radial-gradient(ellipse 85% 75% at 50% 40%, transparent 40%, rgba(92, 64, 40, 0.06) 100%);
+  background-size: 180px 180px, min(520px, 90vw) auto, 100% 100%;
+  background-position: 0 0, left bottom, center;
+  background-repeat: repeat, no-repeat, no-repeat;
 }
 
 a {
@@ -126,6 +148,7 @@ h1, h2, h3 {
   font-style: italic;
   color: var(--ink-muted);
   font-size: 1.05rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 @keyframes fadeUp {
