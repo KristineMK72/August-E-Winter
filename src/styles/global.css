@@ -1,0 +1,120 @@
+/* August Edward Winter — archival paper aesthetic */
+:root {
+  --paper: #f7f1e3;
+  --paper-deep: #efe6d4;
+  --ink: #1c1917;
+  --ink-muted: #57534e;
+  --accent: #7c2d12;
+  --accent-soft: #9a3412;
+  --gold: #a16207;
+  --card: rgba(255, 252, 245, 0.72);
+  --card-solid: #fffcf5;
+  --border: rgba(28, 25, 23, 0.12);
+  --shadow: 0 12px 40px rgba(28, 25, 23, 0.08);
+  --radius: 1.25rem;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  line-height: 1.65;
+  font-size: 1.05rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(161, 98, 7, 0.06), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(124, 45, 18, 0.05), transparent 45%),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.container {
+  width: min(960px, 100% - 2.5rem);
+  margin-inline: auto;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--ink-muted);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+}
+
+.quote {
+  margin: 1.5rem 0 0;
+  padding: 1.25rem 1.5rem;
+  border-left: 3px solid var(--accent);
+  background: rgba(124, 45, 18, 0.04);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+  color: var(--ink-muted);
+  font-size: 1.05rem;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  animation: fadeUp 0.6s ease-out both;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
