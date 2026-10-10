@@ -1,20 +1,17 @@
 {
   "name": "august-e-winter",
-  "private": true,
-  "version": "0.1.0",
+  "type": "module",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "next": "16.1.6",
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.4.0",
-    "@types/react": "^18.2.0",
-    "@types/node": "^20.0.0"
+    "astro": "^5.0.0"
   }
 }
