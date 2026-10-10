@@ -1,0 +1,119 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Sources — August Edward Winter"
+  description="Primary sources and family records behind the narrative of August Edward Winter."
+>
+  <section class="sources-page">
+    <div class="container">
+      <header class="page-header">
+        <h1>Sources</h1>
+        <p class="page-lead">
+          This site is a careful reconstruction, not invention. The narrative
+          rests on Winter’s own words and the memory kept by his family.
+        </p>
+      </header>
+
+      <div class="source-grid">
+        <article class="source-card card">
+          <h2>Primary</h2>
+          <ul>
+            <li>
+              <strong>August Edward Winter</strong> — published account (1899).
+              His own recollection of the Minnesota missionary years, the
+              winter journey west, ordination, marriage, and the upheavals of
+              1862.
+            </li>
+          </ul>
+        </article>
+
+        <article class="source-card card">
+          <h2>Background &amp; family</h2>
+          <ul>
+            <li>
+              Family background compiled by the daughter of August E. Winter
+              (and related family papers), preserving the tone of daily life,
+              devotion, and the generational line that followed.
+            </li>
+          </ul>
+        </article>
+
+        <article class="source-card card note">
+          <h2>About this archive</h2>
+          <p>
+            Dates, places, and quotations are taken from those records. Story
+            sections weave them into readable narrative while staying faithful
+            to the sources. Where Winter’s own phrasing survives, it is given
+            as direct quotation.
+          </p>
+          <p>
+            The site is maintained as a living family and historical memorial—
+            a place for the journey to remain visible.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .sources-page {
+    padding: 2.5rem 0 4rem;
+  }
+
+  .page-header {
+    margin-bottom: 2.25rem;
+    max-width: 38rem;
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 4vw, 2.4rem);
+    margin: 0 0 0.6rem;
+  }
+
+  .page-lead {
+    margin: 0;
+    color: var(--ink-muted);
+  }
+
+  .source-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    max-width: 40rem;
+  }
+
+  .source-card {
+    padding: 1.4rem 1.5rem;
+  }
+
+  .source-card h2 {
+    font-size: 1.15rem;
+    margin: 0 0 0.75rem;
+    color: var(--accent);
+  }
+
+  .source-card ul {
+    margin: 0;
+    padding-left: 1.15rem;
+  }
+
+  .source-card li {
+    margin-bottom: 0.5rem;
+  }
+
+  .source-card p {
+    margin: 0 0 0.85rem;
+    opacity: 0.9;
+  }
+
+  .source-card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .source-card.note {
+    background: rgba(124, 45, 18, 0.04);
+  }
+</style>

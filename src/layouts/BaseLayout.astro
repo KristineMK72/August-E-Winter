@@ -1,0 +1,228 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "August Edward Winter — Missionary Journey (1861–1865)",
+  description = "A narrative reconstruction of Winter’s missionary journey based on his 1899 account and family records.",
+} = Astro.props;
+
+const nav = [
+  { href: "/", label: "Home" },
+  { href: "/timeline", label: "Timeline" },
+  { href: "/sources", label: "Sources" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7f1e3" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner container">
+        <a href="/" class="brand">
+          <span class="brand-kicker">Missionary Journey</span>
+          <span class="brand-title">August Edward Winter</span>
+        </a>
+
+        <nav class="desktop-nav" aria-label="Primary">
+          {nav.map((item) => (
+            <a href={item.href} class="nav-link">
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <details class="mobile-menu">
+          <summary class="hamburger" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </summary>
+          <div class="menu-panel">
+            {nav.map((item) => (
+              <a href={item.href} class="menu-link">
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </details>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>
+          Built from Winter’s published account (1899) and family background by
+          Wilhelm Winter. A living archive of faith, travel, and endurance.
+        </p>
+        <p class="footer-meta">1838 – 1927 · Lutheran Missionary</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(247, 241, 227, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 0;
+  }
+
+  .brand {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+
+  .brand-kicker {
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    opacity: 0.65;
+    font-family: var(--font-sans);
+  }
+
+  .brand-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .desktop-nav {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    transition: background 0.2s ease;
+  }
+
+  .nav-link:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .mobile-menu {
+    display: none;
+    position: relative;
+  }
+
+  .hamburger {
+    list-style: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.4);
+    display: grid;
+    place-content: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .hamburger::-webkit-details-marker {
+    display: none;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--ink);
+  }
+
+  .menu-panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    min-width: 180px;
+    border: 1px solid var(--border);
+    background: rgba(255, 252, 245, 0.96);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .menu-link {
+    display: block;
+    padding: 0.85rem 1rem;
+    text-decoration: none;
+    font-family: var(--font-sans);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .menu-link:first-child {
+    border-top: none;
+  }
+
+  .menu-link:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  main {
+    min-height: 60vh;
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--border);
+    margin-top: 4rem;
+    padding: 2rem 0 2.5rem;
+  }
+
+  .footer-inner {
+    font-size: 0.95rem;
+    opacity: 0.75;
+  }
+
+  .footer-inner p {
+    margin: 0 0 0.5rem;
+  }
+
+  .footer-meta {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 640px) {
+    .desktop-nav {
+      display: none;
+    }
+    .mobile-menu {
+      display: block;
+    }
+  }
+</style>
