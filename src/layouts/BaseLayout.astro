@@ -7,8 +7,8 @@ interface Props {
 }
 
 const {
-  title = "August Edward Winter \u2014 Missionary Journey (1861\u20131865)",
-  description = "A narrative reconstruction of Winter\u2019s missionary journey based on his 1899 account and family records.",
+  title = "August Edward Winter — Missionary Journey (1861–1865)",
+  description = "A narrative reconstruction of Winter’s missionary journey based on his 1899 account and family records.",
 } = Astro.props;
 
 const nav = [
@@ -17,6 +17,9 @@ const nav = [
   { href: "/people", label: "People" },
   { href: "/sources", label: "Sources" },
 ];
+
+// Grasshopper emoji (U+1F997) — keep as real character so it never shows as code points
+const hopper = "\u{1F997}";
 ---
 
 <!doctype html>
@@ -31,10 +34,10 @@ const nav = [
   </head>
   <body>
     <div class="hopper-layer" aria-hidden="true">
-      <span class="hopper hopper--1">\ud83e\udd97</span>
-      <span class="hopper hopper--2">\ud83e\udd97</span>
-      <span class="hopper hopper--3">\ud83e\udd97</span>
-      <span class="hopper hopper--4">\ud83e\udd97</span>
+      <span class="hopper hopper--1">{hopper}</span>
+      <span class="hopper hopper--2">{hopper}</span>
+      <span class="hopper hopper--3">{hopper}</span>
+      <span class="hopper hopper--4">{hopper}</span>
     </div>
 
     <header class="site-header">
@@ -76,10 +79,10 @@ const nav = [
     <footer class="site-footer">
       <div class="container footer-inner">
         <p>
-          Built from Winter\u2019s published account (1899) and family background by
+          Built from Winter’s published account (1899) and family background by
           Wilhelm Winter. A living archive of faith, travel, and endurance.
         </p>
-        <p class="footer-meta">1838 \u2013 1927 \u00b7 Lutheran Missionary</p>
+        <p class="footer-meta">1838 – 1927 · Lutheran Missionary</p>
       </div>
     </footer>
   </body>
