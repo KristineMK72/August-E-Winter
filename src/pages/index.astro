@@ -1,5 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+// Use the photos already in public/ (original UUID filenames)
+const portraitSrc = "/17C4EEED-3B01-413C-B86D-004BC65A7095.png";
+const familySrc = "/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png";
 ---
 
 <BaseLayout>
@@ -7,7 +11,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <div class="container hero-inner">
       <div class="portrait-wrap fade-up">
         <img
-          src="/august-portrait.png"
+          src={portraitSrc}
           alt="Portrait of August Edward Winter"
           width="520"
           height="520"
@@ -29,7 +33,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       <div class="hero-actions fade-up" style="animation-delay: 0.24s">
         <a href="/timeline" class="btn primary">Explore the Timeline</a>
-        <a href="/sources" class="btn ghost">Sources &amp; Legacy</a>
+        <a href="/sources" class="btn ghost">Sources & Legacy</a>
       </div>
     </div>
   </section>
@@ -43,7 +47,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       <figure class="family-card card">
         <img
-          src="/winter-family.png"
+          src={familySrc}
           alt="Four generations of the Winter family"
           width="1400"
           height="900"
