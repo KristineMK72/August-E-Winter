@@ -1,0 +1,144 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { people } from "../data/people";
+
+const groups = [
+  { key: "family" as const, title: "Family", lead: "Parents, wife, and the household that shaped him." },
+  { key: "ministry" as const, title: "Ministry companions", lead: "Pastors and connections who opened doors on the frontier." },
+  { key: "legacy" as const, title: "Legacy", lead: "Generations who carried the story forward." },
+];
+---
+
+<BaseLayout
+  title="People \u2014 August Edward Winter"
+  description="Family, ministry companions, and descendants connected to August Edward Winter."
+>
+  <section class="people-page">
+    <div class="container">
+      <header class="page-header fade-up">
+        <p class="eyebrow">The circle around him</p>
+        <h1>People</h1>
+        <p class="page-lead">
+          Parents from Waldeck, a three-day courtship in Wisconsin, fellow pastors,
+          and four generations who kept the journey in memory.
+        </p>
+      </header>
+
+      <figure class="family-hero card pop fade-up">
+        <img
+          src="/ACCD8F2A-E9C5-40BD-9955-ED7CA61BD34E.png"
+          alt="Four generations of the Winter family"
+          width="1400"
+          height="900"
+          loading="lazy"
+        />
+        <figcaption>
+          <strong>Four generations</strong> \u2014 AE Winter \u00b7 Daniel Winter \u00b7 Albert Winter \u00b7
+          Lillian Rose Louise Winter
+        </figcaption>
+      </figure>
+
+      {
+        groups.map((g) => {
+          const list = people.filter((p) => p.relation === g.key);
+          if (!list.length) return null;
+          return (
+            <div class="group">
+              <h2 class="group-title">{g.title}</h2>
+              <p class="group-lead">{g.lead}</p>
+              <div class="people-grid">
+                {list.map((p) => (
+                  <article class="person-card card pop">
+                    <div class="person-role">{p.role}</div>
+                    <h2>{p.name}</h2>
+                    {p.years && <p class="person-years">{p.years}</p>}
+                    <p>{p.blurb}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          );
+        })
+      }
+
+      <p class="note">
+        Drawn from Winter\u2019s reminiscences, family records, and genealogical notes
+        (including Wilhelm &amp; Henrietta Meissner Winter; marriage to Johanna
+        Christiana Posner, 3 July 1862; death at Loganville, Sauk County, Wisconsin,
+        24 December 1927).
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .people-page {
+    padding: 2.25rem 0 4rem;
+  }
+
+  .page-header {
+    margin-bottom: 1.75rem;
+    max-width: 40rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+    margin: 0 0 0.55rem;
+  }
+
+  .page-lead {
+    margin: 0;
+    color: var(--ink-muted);
+  }
+
+  .family-hero {
+    max-width: 720px;
+    margin: 0 auto 2.5rem;
+    padding: 0.75rem;
+    overflow: hidden;
+  }
+
+  .family-hero img {
+    width: 100%;
+    border-radius: calc(var(--radius) - 4px);
+  }
+
+  .family-hero figcaption {
+    padding: 0.85rem 0.4rem 0.25rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+  }
+
+  .group {
+    margin-bottom: 2.25rem;
+  }
+
+  .group-title {
+    margin: 0 0 0.25rem;
+    font-size: 1.35rem;
+  }
+
+  .group-lead {
+    margin: 0 0 1rem;
+    color: var(--ink-muted);
+    font-size: 0.98rem;
+  }
+
+  .note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    font-family: var(--font-sans);
+    max-width: 40rem;
+  }
+</style>

@@ -1,17 +1,19 @@
-/* August Edward Winter — archival paper + living frontier */
+/* August Edward Winter — 1800s warm gold parchment */
 :root {
-  --paper: #f7f1e3;
-  --paper-deep: #efe6d4;
-  --ink: #1c1917;
-  --ink-muted: #57534e;
-  --accent: #7c2d12;
-  --accent-soft: #9a3412;
-  --gold: #a16207;
-  --card: rgba(255, 252, 245, 0.82);
-  --card-solid: #fffcf5;
-  --border: rgba(28, 25, 23, 0.12);
-  --shadow: 0 12px 40px rgba(28, 25, 23, 0.08);
-  --shadow-pop: 0 22px 50px rgba(28, 25, 23, 0.18);
+  --paper: #f4e8c8;
+  --paper-deep: #e8d5a8;
+  --ink: #2a1f14;
+  --ink-muted: #6b5344;
+  --accent: #8b4513;
+  --accent-soft: #a0522d;
+  --gold: #c9a227;
+  --gold-bright: #e8c547;
+  --gold-deep: #8a6d1b;
+  --card: rgba(255, 248, 230, 0.88);
+  --card-solid: #fff8e6;
+  --border: rgba(139, 69, 19, 0.18);
+  --shadow: 0 12px 40px rgba(61, 40, 20, 0.12);
+  --shadow-pop: 0 22px 50px rgba(61, 40, 20, 0.22);
   --radius: 1.25rem;
   --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
   --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -39,7 +41,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Layer 1: warm paper wash + soft gold/ink glows */
+/* Warm candlelight washes */
 body::before {
   content: "";
   position: fixed;
@@ -47,28 +49,25 @@ body::before {
   pointer-events: none;
   z-index: -2;
   background:
-    radial-gradient(ellipse 70% 45% at 12% 8%, rgba(161, 98, 7, 0.09), transparent 55%),
-    radial-gradient(ellipse 55% 40% at 92% 88%, rgba(124, 45, 18, 0.07), transparent 50%),
-    radial-gradient(ellipse 50% 35% at 50% 50%, rgba(255, 252, 245, 0.35), transparent 70%),
-    linear-gradient(180deg, #faf6ec 0%, var(--paper) 40%, var(--paper-deep) 100%);
+    radial-gradient(ellipse 75% 50% at 15% 5%, rgba(232, 197, 71, 0.18), transparent 55%),
+    radial-gradient(ellipse 60% 45% at 90% 90%, rgba(139, 69, 19, 0.12), transparent 50%),
+    radial-gradient(ellipse 40% 30% at 70% 20%, rgba(201, 162, 39, 0.1), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 40% 70%, rgba(255, 248, 230, 0.4), transparent 65%),
+    linear-gradient(175deg, #faf0d4 0%, var(--paper) 35%, #e6d4a0 100%);
 }
 
-/* Layer 2: paper grain + faint prairie grass silhouettes + vignette */
+/* Grain + prairie + gold edge vignette */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  opacity: 1;
   background-image:
-    /* fine grain */
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E"),
-    /* prairie grass bottom-left */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120' fill='none'%3E%3Cpath d='M20 120 Q28 40 36 120 M40 120 Q50 25 58 120 M62 120 Q72 50 80 120 M90 120 Q98 30 106 120 M115 120 Q125 45 132 120 M145 120 Q155 20 162 120 M175 120 Q183 55 190 120 M205 120 Q215 35 222 120 M235 120 Q245 48 252 120 M270 120 Q280 28 288 120 M300 120 Q310 42 318 120 M335 120 Q345 22 352 120 M370 120 Q380 50 388 120' stroke='%23a16207' stroke-width='1.2' stroke-opacity='0.12'/%3E%3C/svg%3E"),
-    /* soft edge vignette */
-    radial-gradient(ellipse 85% 75% at 50% 40%, transparent 40%, rgba(92, 64, 40, 0.06) 100%);
-  background-size: 180px 180px, min(520px, 90vw) auto, 100% 100%;
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120' fill='none'%3E%3Cpath d='M20 120 Q28 40 36 120 M40 120 Q50 25 58 120 M62 120 Q72 50 80 120 M90 120 Q98 30 106 120 M115 120 Q125 45 132 120 M145 120 Q155 20 162 120 M175 120 Q183 55 190 120 M205 120 Q215 35 222 120 M235 120 Q245 48 252 120 M270 120 Q280 28 288 120 M300 120 Q310 42 318 120 M335 120 Q345 22 352 120 M370 120 Q380 50 388 120' stroke='%23c9a227' stroke-width='1.4' stroke-opacity='0.2'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 80% 70% at 50% 40%, transparent 35%, rgba(90, 55, 20, 0.1) 100%);
+  background-size: 160px 160px, min(520px, 90vw) auto, 100% 100%;
   background-position: 0 0, left bottom, center;
   background-repeat: repeat, no-repeat, no-repeat;
 }
@@ -112,11 +111,10 @@ h1, h2, h3 {
   letter-spacing: 0.02em;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 248, 230, 0.7);
   color: var(--ink-muted);
 }
 
-/* Pop-out cards */
 .card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -130,7 +128,7 @@ h1, h2, h3 {
 .card.pop:hover,
 .card.pop:focus-within {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: var(--shadow-pop);
+  box-shadow: var(--shadow-pop), 0 0 0 1px rgba(201, 162, 39, 0.25);
 }
 
 @media (hover: none) {
@@ -142,8 +140,8 @@ h1, h2, h3 {
 .quote {
   margin: 1.5rem 0 0;
   padding: 1.25rem 1.5rem;
-  border-left: 3px solid var(--accent);
-  background: rgba(124, 45, 18, 0.04);
+  border-left: 3px solid var(--gold);
+  background: rgba(201, 162, 39, 0.08);
   border-radius: 0 var(--radius) var(--radius) 0;
   font-style: italic;
   color: var(--ink-muted);
@@ -161,11 +159,10 @@ h1, h2, h3 {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--gold);
   outline-offset: 3px;
 }
 
-/* ===== Grasshoppers (Minnesota frontier easter egg) ===== */
 .hopper-layer {
   position: fixed;
   inset: 0;
@@ -188,9 +185,7 @@ h1, h2, h3 {
     opacity: 0;
     transform: translate3d(-10vw, 20vh, 0) rotate(-15deg) scale(0.6);
   }
-  8% {
-    opacity: 0.95;
-  }
+  8% { opacity: 0.95; }
   20% {
     transform: translate3d(15vw, 8vh, 40px) rotate(12deg) scale(1.15);
   }
@@ -259,7 +254,6 @@ h1, h2, h3 {
   }
 }
 
-/* Era gallery */
 .era-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -307,4 +301,48 @@ h1, h2, h3 {
   font-family: var(--font-serif);
   font-size: 0.95rem;
   margin-bottom: 0.2rem;
+}
+
+/* People grid */
+.people-grid {
+  display: grid;
+  gap: 1.15rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .people-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.person-card {
+  padding: 1.35rem 1.4rem;
+}
+
+.person-role {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 0.35rem;
+}
+
+.person-card h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+}
+
+.person-years {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  font-family: var(--font-sans);
+}
+
+.person-card p {
+  margin: 0;
+  font-size: 0.98rem;
+  color: var(--ink-muted);
 }
