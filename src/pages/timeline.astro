@@ -21,7 +21,7 @@ import { timeline } from "../data/timeline";
       <div class="timeline-list">
         {
           timeline.map((item, i) => (
-            <article class="timeline-card card fade-up" style={`animation-delay: ${Math.min(i * 0.04, 0.3)}s`}>
+            <article class="timeline-card card pop fade-up" style={`animation-delay: ${Math.min(i * 0.04, 0.3)}s`}>
               <div class="year">{item.year}</div>
               <h2>{item.title}</h2>
               <p class="subtitle">{item.subtitle}</p>
@@ -95,7 +95,13 @@ import { timeline } from "../data/timeline";
   }
 
   .timeline-card {
-    padding: 1.6rem 1.75rem;
+    padding: 1.35rem 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .timeline-card {
+      padding: 1.6rem 1.75rem;
+    }
   }
 
   .year {
@@ -108,7 +114,7 @@ import { timeline } from "../data/timeline";
   }
 
   .timeline-card h2 {
-    font-size: 1.45rem;
+    font-size: clamp(1.25rem, 3vw, 1.45rem);
     margin: 0 0 0.25rem;
   }
 
