@@ -5,24 +5,30 @@ import { timeline } from "../data/timeline";
 function osmEmbed(bbox: string) {
   return `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik`;
 }
+
+// Real characters (do not put \u escapes in HTML text — they print literally)
+const pin = "\u{1F4CD}";
+const ldquo = "\u{201C}";
+const rdquo = "\u{201D}";
+const emdash = "\u{2014}";
+const endash = "\u{2013}";
 ---
 
 <BaseLayout
-  title="Timeline \u2014 August Edward Winter"
-  description="A narrative timeline of August Edward Winter\u2019s life and missionary journey, 1838\u20131927 \u2014 with maps, period images, and locations."
+  title={`Timeline ${emdash} August Edward Winter`}
+  description={`A narrative timeline of August Edward Winter's life and missionary journey, 1838${endash}1927 ${emdash} with maps, period images, and locations.`}
 >
   <section class="timeline-page">
     <div class="container">
       <header class="page-header fade-up">
-        <p class="eyebrow">1838 \u2013 1927</p>
+        <p class="eyebrow">1838 {endash} 1927</p>
         <h1>The Journey</h1>
         <p class="page-lead">
-          From a boyhood in Waldeck to the Minnesota frontier \u2014 maps, places,
+          From a boyhood in Waldeck to the Minnesota frontier {emdash} maps, places,
           and period images along the road.
         </p>
       </header>
 
-      <!-- Journey strip -->
       <nav class="journey-strip card pop fade-up" aria-label="Jump to a year">
         {
           timeline.map((item) => (
@@ -53,7 +59,6 @@ function osmEmbed(bbox: string) {
                   </div>
                 </div>
 
-                {/* Image gallery */}
                 {item.images && item.images.length > 0 && (
                   <div class={`img-gallery cols-${Math.min(item.images.length, 3)}`}>
                     {item.images.map((img) => (
@@ -79,11 +84,10 @@ function osmEmbed(bbox: string) {
 
                 {item.quote && (
                   <blockquote class="quote pop">
-                    \u201c{item.quote}\u201d
+                    {ldquo}{item.quote}{rdquo}
                   </blockquote>
                 )}
 
-                {/* Map + locations row */}
                 {(item.map || (item.locations && item.locations.length > 0)) && (
                   <div class="place-block">
                     {item.map && (
@@ -110,7 +114,7 @@ function osmEmbed(bbox: string) {
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
-                                \ud83d\udccd {loc}
+                                {pin} {loc}
                               </a>
                             ))}
                           </div>
@@ -169,7 +173,6 @@ function osmEmbed(bbox: string) {
     font-size: 1.05rem;
   }
 
-  /* Journey strip */
   .journey-strip {
     display: flex;
     gap: 0.5rem;
@@ -263,7 +266,6 @@ function osmEmbed(bbox: string) {
     font-size: 0.95rem;
   }
 
-  /* Image galleries */
   .img-gallery {
     display: grid;
     gap: 0.75rem;
@@ -337,7 +339,6 @@ function osmEmbed(bbox: string) {
     transform: translateY(-3px);
   }
 
-  /* Places */
   .place-block {
     margin-top: 1.35rem;
     display: grid;
@@ -419,7 +420,6 @@ function osmEmbed(bbox: string) {
     margin-bottom: 0.25rem;
   }
 
-  /* Soft alternating accent line */
   .timeline-card.side-left::before,
   .timeline-card.side-right::before {
     content: "";
