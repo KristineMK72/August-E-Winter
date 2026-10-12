@@ -7,10 +7,14 @@ const groups = [
   { key: "ministry" as const, title: "Ministry companions", lead: "Pastors and connections who opened doors on the frontier." },
   { key: "legacy" as const, title: "Legacy", lead: "Generations who carried the story forward." },
 ];
+
+const emdash = "\u{2014}";
+const middot = "\u{00B7}";
+const rsquo = "\u{2019}";
 ---
 
 <BaseLayout
-  title="People \u2014 August Edward Winter"
+  title={`People ${emdash} August Edward Winter`}
   description="Family, ministry companions, and descendants connected to August Edward Winter."
 >
   <section class="people-page">
@@ -33,7 +37,7 @@ const groups = [
           loading="lazy"
         />
         <figcaption>
-          <strong>Four generations</strong> \u2014 AE Winter \u00b7 Daniel Winter \u00b7 Albert Winter \u00b7
+          <strong>Four generations</strong> {emdash} AE Winter {middot} Daniel Winter {middot} Albert Winter {middot}
           Lillian Rose Louise Winter
         </figcaption>
       </figure>
@@ -62,8 +66,8 @@ const groups = [
       }
 
       <p class="note">
-        Drawn from Winter\u2019s reminiscences, family records, and genealogical notes
-        (including Wilhelm &amp; Henrietta Meissner Winter; marriage to Johanna
+        Drawn from Winter{rsquo}s reminiscences, family records, and genealogical notes
+        (including Wilhelm & Henrietta Meissner Winter; marriage to Johanna
         Christiana Posner, 3 July 1862; death at Loganville, Sauk County, Wisconsin,
         24 December 1927).
       </p>
